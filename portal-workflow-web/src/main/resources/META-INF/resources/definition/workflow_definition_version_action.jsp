@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/definition/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -28,7 +28,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="viewURL">
-		<portlet:param name="mvcPath" value="/view_workflow_definition.jsp" />
+		<portlet:param name="mvcPath" value="/definition/view_workflow_definition.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
 		<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
