@@ -62,4 +62,4 @@ page import="javax.portlet.WindowState" %>
 WorkflowDefinitionDisplayContext workflowDefinitionDisplayContext = (WorkflowDefinitionDisplayContext)renderRequest.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<%@ include file="/init-ext.jsp" %>
+<%@ include file="/definition/init-ext.jsp" %>

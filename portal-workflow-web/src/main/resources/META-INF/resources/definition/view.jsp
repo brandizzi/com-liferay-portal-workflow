@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/definition/init.jsp" %>
 
 <%
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
@@ -28,7 +28,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 PortletURL navigationPortletURL = renderResponse.createRenderURL();
 
-navigationPortletURL.setParameter("mvcPath", "/view.jsp");
+navigationPortletURL.setParameter("mvcPath", "/definition/view.jsp");
 
 if (delta > 0) {
 	navigationPortletURL.setParameter("delta", String.valueOf(delta));
@@ -50,7 +50,7 @@ if (cur > 0) {
 PortletURL searchURL = renderResponse.createRenderURL();
 
 searchURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-searchURL.setParameter("mvcPath", "/view.jsp");
+searchURL.setParameter("mvcPath", "/definition/view.jsp");
 
 PortletURL viewDefinitionsURL = renderResponse.createRenderURL();
 
@@ -61,7 +61,7 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 
 <liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>" message="you-cannot-deactivate-or-delete-this-definition" />
 
-<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/definition/add_button.jsp" servletContext="<%= application %>" />
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
@@ -74,7 +74,7 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 
 	<aui:nav-bar-search>
 		<aui:form action="<%= searchURL.toString() %>" method="post" name="fm1">
-			<liferay-util:include page="/workflow_definition_search.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/definition/workflow_definition_search.jsp" servletContext="<%= application %>" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
@@ -129,7 +129,7 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 			<%
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("mvcPath", "/edit_workflow_definition.jsp");
+			rowURL.setParameter("mvcPath", "/definition/edit_workflow_definition.jsp");
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("name", workflowDefinition.getName());
 			rowURL.setParameter("version", String.valueOf(workflowDefinition.getVersion()));
@@ -160,7 +160,7 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				path="/workflow_definition_action.jsp"
+				path="/definition/workflow_definition_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
