@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/definition_link/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -24,7 +24,7 @@ WorkflowDefinitionLinkSearchEntry workflowDefinitionLinkSearchEntry = (WorkflowD
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcPath" value="/edit_workflow_definition_link.jsp" />
+		<portlet:param name="mvcPath" value="/definition_link/edit_workflow_definition_link.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="className" value="<%= workflowDefinitionLinkSearchEntry.getClassName() %>" />
 		<portlet:param name="resource" value="<%= workflowDefinitionLinkSearchEntry.getResource() %>" />
