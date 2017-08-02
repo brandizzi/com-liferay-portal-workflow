@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/definition/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -30,7 +30,7 @@ renderResponse.setTitle(workflowDefinition.getName());
 %>
 
 <liferay-portlet:renderURL var="editWorkflowDefinitionURL">
-	<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
+	<portlet:param name="mvcPath" value="/definition/edit_workflow_definition.jsp" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
 	<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />

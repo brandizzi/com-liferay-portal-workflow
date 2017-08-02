@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-workflow-definitions",
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.header-portlet-css=/definition/css/main.css",
 		"com.liferay.portlet.icon=/icons/workflow_definition.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
@@ -58,8 +58,8 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Workflow Definition",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.init-param.template-path=/definition/",
+		"javax.portlet.init-param.view-template=/definition/view.jsp",
 		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
@@ -83,8 +83,10 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, displayContext);
 
-			if (Objects.equals(path, "/edit_workflow_definition.jsp") ||
-				Objects.equals(path, "/view_workflow_definition.jsp")) {
+			if (Objects.equals(
+					path, "/definition/edit_workflow_definition.jsp") ||
+				Objects.equals(
+					path, "/definition/view_workflow_definition.jsp")) {
 
 				setWorkflowDefinitionRenderRequestAttribute(renderRequest);
 			}
@@ -111,7 +113,7 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 		if (SessionErrors.contains(
 				renderRequest, WorkflowException.class.getName())) {
 
-			include("/error.jsp", renderRequest, renderResponse);
+			include("/definition/error.jsp", renderRequest, renderResponse);
 		}
 		else {
 			super.doDispatch(renderRequest, renderResponse);

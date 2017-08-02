@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/definition/init.jsp" %>
 
 <%
 WorkflowDefinitionDisplayTerms displayTerms = new WorkflowDefinitionDisplayTerms(renderRequest);

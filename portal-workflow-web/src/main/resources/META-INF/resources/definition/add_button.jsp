@@ -14,15 +14,15 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/definition/init.jsp" %>
 
 <portlet:renderURL var="viewDefinitionsURL">
-	<portlet:param name="mvcPath" value="/view.jsp" />
+	<portlet:param name="mvcPath" value="/definition/view.jsp" />
 	<portlet:param name="tabs1" value="workflow-definitions" />
 </portlet:renderURL>
 
 <portlet:renderURL var="addWorkflowDefinitionURL">
-	<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
+	<portlet:param name="mvcPath" value="/definition/edit_workflow_definition.jsp" />
 	<portlet:param name="tabs1" value="workflow-definitions" />
 	<portlet:param name="redirect" value="<%= viewDefinitionsURL %>" />
 	<portlet:param name="backURL" value="<%= viewDefinitionsURL %>" />

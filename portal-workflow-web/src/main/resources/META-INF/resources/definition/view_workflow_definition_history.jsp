@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/definition/init.jsp" %>
 
 <%
 WorkflowDefinition currentWorkflowDefinition = (WorkflowDefinition)request.getAttribute(WebKeys.WORKFLOW_DEFINITION);
@@ -37,7 +37,7 @@ WorkflowDefinition currentWorkflowDefinition = (WorkflowDefinition)request.getAt
 		/>
 
 		<liferay-ui:search-container-column-jsp
-			path="/workflow_definition_version_action.jsp"
+			path="/definition/workflow_definition_version_action.jsp"
 		/>
 	</liferay-ui:search-container-row>
 
