@@ -14,12 +14,12 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/definition_link/init.jsp" %>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/view.jsp");
+portletURL.setParameter("mvcPath", "/definition_link/view.jsp");
 portletURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 %>
 
@@ -30,7 +30,7 @@ portletURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()
 
 	<aui:nav-bar-search>
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-			<liferay-util:include page="/workflow_definition_link_search.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/definition_link/workflow_definition_link_search.jsp" servletContext="<%= application %>" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>

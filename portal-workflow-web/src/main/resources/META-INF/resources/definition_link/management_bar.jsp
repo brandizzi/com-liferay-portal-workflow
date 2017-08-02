@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/definition_link/init.jsp" %>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
