@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/definition_link/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
