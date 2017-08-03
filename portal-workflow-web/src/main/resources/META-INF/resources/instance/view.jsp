@@ -24,19 +24,12 @@ String displayStyle = workflowInstanceViewDisplayContext.getDisplayStyle();
 PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
 %>
 
+<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchPage" value="/instance/workflow_instance_search.jsp" />
+	<liferay-util:param name="searchURL" value="<%= portletURL.toString() %>" />
+</liferay-util:include>
+
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-		<aui:nav cssClass="navbar-nav">
-			<aui:nav-item label="<%= workflowInstanceViewDisplayContext.getHeaderTitle() %>" selected="<%= true %>" />
-		</aui:nav>
-
-		<aui:nav-bar-search>
-			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</aui:nav-bar>
-
 	<liferay-util:include page="/instance/toolbar.jsp" servletContext="<%= application %>" />
 </aui:form>
 
