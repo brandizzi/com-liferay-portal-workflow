@@ -15,7 +15,8 @@
 package com.liferay.portal.workflow.definition.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.workflow.definition.web.internal.constants.WorkflowDefinitionPortletKeys;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,7 +26,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION,
+		"javax.portlet.name=" + WorkflowDefinitionPortletKeys.WORKFLOW_DEFINITION,
+		"javax.portlet.name=" + WorkflowPortletKeys.WORKFLOW,
 		"mvc.command.name=deactivateWorkflowDefinition"
 	},
 	service = MVCActionCommand.class

@@ -44,7 +44,8 @@ page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
 page import="com.liferay.portal.workflow.definition.web.internal.dao.search.WorkflowDefinitionResultRowSplitter" %><%@
 page import="com.liferay.portal.workflow.definition.web.internal.display.context.WorkflowDefinitionDisplayContext" %><%@
 page import="com.liferay.portal.workflow.definition.web.internal.search.WorkflowDefinitionDisplayTerms" %><%@
-page import="com.liferay.portal.workflow.definition.web.internal.search.WorkflowDefinitionSearch" %>
+page import="com.liferay.portal.workflow.definition.web.internal.search.WorkflowDefinitionSearch" %><%@
+page import="com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %>
@@ -59,7 +60,7 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-WorkflowDefinitionDisplayContext workflowDefinitionDisplayContext = (WorkflowDefinitionDisplayContext)renderRequest.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+WorkflowDefinitionDisplayContext workflowDefinitionDisplayContext = (WorkflowDefinitionDisplayContext)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_DEFINITION_DISPLAY_CONTEXT);
 %>
 
 <%@ include file="/definition/init-ext.jsp" %>

@@ -30,7 +30,8 @@ page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
 page import="com.liferay.portal.workflow.definition.link.web.internal.display.context.WorkflowDefinitionLinkDisplayContext" %><%@
 page import="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkDisplayTerms" %><%@
 page import="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkSearch" %><%@
-page import="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkSearchEntry" %>
+page import="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkSearchEntry" %><%@
+page import="com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
@@ -42,7 +43,7 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-WorkflowDefinitionLinkDisplayContext workflowDefinitionLinkDisplayContext = (WorkflowDefinitionLinkDisplayContext)renderRequest.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+WorkflowDefinitionLinkDisplayContext workflowDefinitionLinkDisplayContext = (WorkflowDefinitionLinkDisplayContext)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT);
 %>
 
 <%@ include file="/definition_link/init-ext.jsp" %>
