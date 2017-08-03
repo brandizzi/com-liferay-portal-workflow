@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/instance/init.jsp" %>
 
 <%
 DateSearchEntry dateSearchEntry = new DateSearchEntry();
@@ -37,9 +37,9 @@ PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
 		</aui:nav-bar-search>
 	</aui:nav-bar>
 
-	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/instance/toolbar.jsp" servletContext="<%= application %>" />
 </aui:form>
 
 <div class="container-fluid-1280 main-content-body">
-	<%@ include file="/workflow_instance.jspf" %>
+	<%@ include file="/instance/workflow_instance.jspf" %>
 </div>
