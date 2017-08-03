@@ -14,10 +14,27 @@
 
 package com.liferay.portal.workflow.web.internal.portlet;
 
-import javax.portlet.Portlet;
-
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.workflow.definition.web.internal.display.context.WorkflowDefinitionDisplayContext;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+
+import java.io.IOException;
+
+import java.util.Objects;
+
+import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -48,4 +65,71 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class WorkflowPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		prepareWorkflowDefinitionDisplay(renderRequest, renderResponse);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	protected void prepareWorkflowDefinitionDisplay(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			String path = getPath(renderRequest, renderResponse);
+
+			WorkflowDefinitionDisplayContext displayContext =
+				new WorkflowDefinitionDisplayContext(renderRequest);
+
+			renderRequest.setAttribute(
+				WorkflowWebKeys.WORKFLOW_DEFINITION_DISPLAY_CONTEXT,
+				displayContext);
+
+			if (Objects.equals(
+					path, "/definition/edit_workflow_definition.jsp") ||
+				Objects.equals(
+					path, "/definition/view_workflow_definition.jsp")) {
+
+				setWorkflowDefinitionRenderRequestAttribute(renderRequest);
+			}
+		}
+		catch (Exception e) {
+			if (isSessionErrorException(e)) {
+				hideDefaultErrorMessage(renderRequest);
+
+				SessionErrors.add(renderRequest, e.getClass());
+			}
+			else {
+				throw new PortletException(e);
+			}
+		}
+	}
+
+	protected void setWorkflowDefinitionRenderRequestAttribute(
+			RenderRequest renderRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String name = ParamUtil.getString(renderRequest, "name");
+		int version = ParamUtil.getInteger(renderRequest, "version");
+
+		if (Validator.isNull(name)) {
+			return;
+		}
+
+		WorkflowDefinition workflowDefinition =
+			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+				themeDisplay.getCompanyId(), name, version);
+
+		renderRequest.setAttribute(
+			WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
+	}
+
 }

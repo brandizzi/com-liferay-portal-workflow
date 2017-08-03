@@ -18,10 +18,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
+import com.liferay.portal.workflow.definition.web.internal.constants.WorkflowDefinitionPortletKeys;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.util.Locale;
 import java.util.Map;
@@ -37,7 +38,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION,
+		"javax.portlet.name=" + WorkflowDefinitionPortletKeys.WORKFLOW_DEFINITION,
+		"javax.portlet.name=" + WorkflowPortletKeys.WORKFLOW,
 		"mvc.command.name=addWorkflowDefinition"
 	},
 	service = MVCActionCommand.class
