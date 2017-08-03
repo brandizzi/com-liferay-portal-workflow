@@ -14,17 +14,6 @@
  */
 --%>
 
-<%@ include file="/definition_link/init.jsp" %>
+<%@ include file="/instance/init.jsp" %>
 
-<%
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/definition_link/view.jsp");
-portletURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-portletURL.setParameter("tab", "schemes");
-%>
-
-<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchPage" value="/definition_link/workflow_definition_link_search.jsp" />
-	<liferay-util:param name="searchURL" value="<%= portletURL.toString() %>" />
-</liferay-util:include>
+<liferay-ui:input-search markupView="lexicon" />
