@@ -19,6 +19,12 @@ package com.liferay.portal.workflow.web.internal.constants;
  */
 public interface WorkflowWebKeys {
 
+	public static final String WORKFLOW_DEFINITION_DISPLAY_CONTEXT =
+		"WORKFLOW_DEFINITION_DISPLAY_CONTEXT";
+
+	public static final String WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT =
+		"WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT";
+
 	public static final String WORKFLOW_TAB_DEFINITION = "workflows";
 
 	public static final String WORKFLOW_TAB_DEFINITION_LINK = "schemes";
