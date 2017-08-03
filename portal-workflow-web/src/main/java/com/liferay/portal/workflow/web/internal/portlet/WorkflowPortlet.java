@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.web.internal.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.workflow.definition.link.web.internal.display.context.WorkflowDefinitionLinkDisplayContext;
 import com.liferay.portal.workflow.definition.web.internal.display.context.WorkflowDefinitionDisplayContext;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
@@ -37,6 +39,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
@@ -72,6 +75,7 @@ public class WorkflowPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		prepareWorkflowDefinitionDisplay(renderRequest, renderResponse);
+		prepareWorkflowDefinitionLinkDisplay(renderRequest, renderResponse);
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -110,6 +114,33 @@ public class WorkflowPortlet extends MVCPortlet {
 		}
 	}
 
+	protected void prepareWorkflowDefinitionLinkDisplay(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			WorkflowDefinitionLinkDisplayContext displayContext =
+				new WorkflowDefinitionLinkDisplayContext(
+					renderRequest, renderResponse,
+					_workflowDefinitionLinkLocalService);
+
+			renderRequest.setAttribute(
+				WorkflowWebKeys.WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT,
+				displayContext);
+		}
+		catch (PortalException pe) {
+			throw new PortletException(pe);
+		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setWorkflowDefinitionLinkLocalService(
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
+	}
+
 	protected void setWorkflowDefinitionRenderRequestAttribute(
 			RenderRequest renderRequest)
 		throws PortalException {
@@ -131,5 +162,8 @@ public class WorkflowPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
 	}
+
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }
