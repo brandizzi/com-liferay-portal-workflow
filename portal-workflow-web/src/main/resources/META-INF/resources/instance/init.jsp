@@ -64,4 +64,4 @@ else {
 }
 %>
 
-<%@ include file="/init-ext.jsp" %>
+<%@ include file="/instance/init-ext.jsp" %>
