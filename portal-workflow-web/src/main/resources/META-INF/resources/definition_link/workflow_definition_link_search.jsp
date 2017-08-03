@@ -14,22 +14,20 @@
  */
 --%>
 
-<%@ include file="/definition_link/init.jsp" %>
+<%@ include file="/instance/init.jsp" %>
 
 <%
-WorkflowDefinitionLinkDisplayTerms displayTerms = new WorkflowDefinitionLinkDisplayTerms(renderRequest);
+WorkflowInstanceViewDisplayContext displayTerms = new WorkflowInstanceViewDisplayContext((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse);
 %>
 
 <liferay-ui:search-toggle
 	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
-	id="toggle_id_workflow_definition_link_search"
+	id="toggle_id_workflow_instance_search"
 	markupView="lexicon"
 >
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" name="<%= WorkflowDefinitionLinkDisplayTerms.RESOURCE %>" size="20" type="text" value="<%= displayTerms.getResource() %>" />
-
-		<aui:input inlineField="<%= true %>" name="<%= WorkflowDefinitionLinkDisplayTerms.WORKFLOW %>" size="20" type="text" value="<%= displayTerms.getWorkflow() %>" />
+		<aui:input inlineField="<%= true %>" name="keywords" size="20" type="text" value="<%= displayTerms.getKeywords() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>
