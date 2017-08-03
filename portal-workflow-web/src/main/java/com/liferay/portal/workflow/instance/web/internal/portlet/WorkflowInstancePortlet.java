@@ -64,8 +64,8 @@ import org.osgi.service.component.annotations.Modified;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Workflow Instance",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.init-param.template-path=/instance/",
+		"javax.portlet.init-param.view-template=/instance/view.jsp",
 		"javax.portlet.name=" + WorkflowInstancePortletKeys.WORKFLOW_INSTANCE,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
@@ -131,7 +131,7 @@ public class WorkflowInstancePortlet extends MVCPortlet {
 		if (SessionErrors.contains(
 				renderRequest, WorkflowException.class.getName())) {
 
-			include("/error.jsp", renderRequest, renderResponse);
+			include("/instance/error.jsp", renderRequest, renderResponse);
 		}
 		else {
 			renderRequest.setAttribute(

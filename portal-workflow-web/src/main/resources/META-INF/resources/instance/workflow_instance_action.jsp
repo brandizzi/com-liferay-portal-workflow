@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/instance/init.jsp" %>
 
 <%
 String randomId = StringUtil.randomId();
@@ -34,7 +34,7 @@ else {
 <liferay-ui:icon-menu cssClass="lfr-asset-actions" direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= !workflowInstance.isComplete() %>">
 		<portlet:renderURL var="redirectURL">
-			<portlet:param name="mvcPath" value="/view.jsp" />
+			<portlet:param name="mvcPath" value="/instance/view.jsp" />
 		</portlet:renderURL>
 
 		<portlet:actionURL name="deleteWorkflowInstance" var="deleteURL">

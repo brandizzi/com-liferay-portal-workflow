@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/instance/init.jsp" %>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= false %>"

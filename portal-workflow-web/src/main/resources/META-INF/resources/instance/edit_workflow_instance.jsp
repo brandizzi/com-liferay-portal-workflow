@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/instance/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -43,7 +43,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				%>
 
-				<liferay-util:include page="/workflow_instance_action.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/instance/workflow_instance_action.jsp" servletContext="<%= application %>" />
 
 				<aui:col width="<%= 60 %>">
 					<aui:field-wrapper label="state">
@@ -76,7 +76,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 							<liferay-ui:icon-list>
 								<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
 									<portlet:renderURL var="viewFullContentURL">
-										<portlet:param name="mvcPath" value="/view_content.jsp" />
+										<portlet:param name="mvcPath" value="/instance/view_content.jsp" />
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 
 										<c:if test="<%= assetEntry != null %>">
@@ -169,7 +169,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 				</c:if>
 
 				<liferay-ui:panel markupView="lexicon" title="activities">
-					<%@ include file="/workflow_logs.jspf" %>
+					<%@ include file="/instance/workflow_logs.jspf" %>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>
 		</aui:fieldset-group>
