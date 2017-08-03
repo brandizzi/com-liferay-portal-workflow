@@ -21,16 +21,10 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/definition_link/view.jsp");
 portletURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+portletURL.setParameter("tab", "schemes");
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" id="toolbar" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="workflow-configuration" selected="<%= true %>" />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-			<liferay-util:include page="/definition_link/workflow_definition_link_search.jsp" servletContext="<%= application %>" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchPage" value="/definition_link/workflow_definition_link_search.jsp" />
+	<liferay-util:param name="searchURL" value="<%= portletURL.toString() %>" />
+</liferay-util:include>

@@ -51,10 +51,7 @@ PortletURL searchURL = renderResponse.createRenderURL();
 
 searchURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 searchURL.setParameter("mvcPath", "/definition/view.jsp");
-
-PortletURL viewDefinitionsURL = renderResponse.createRenderURL();
-
-viewDefinitionsURL.setParameter("navigation", "definitions");
+searchURL.setParameter("tab", "workflows");
 
 WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch(renderRequest, portletURL);
 %>
@@ -63,21 +60,10 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 
 <liferay-util:include page="/definition/add_button.jsp" servletContext="<%= application %>" />
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item
-			href="<%= viewDefinitionsURL %>"
-			label="definitions"
-			selected='<%= navigation.equals("definitions") %>'
-		/>
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= searchURL.toString() %>" method="post" name="fm1">
-			<liferay-util:include page="/definition/workflow_definition_search.jsp" servletContext="<%= application %>" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchPage" value="/definition/workflow_definition_search.jsp" />
+	<liferay-util:param name="searchURL" value="<%= searchURL.toString() %>" />
+</liferay-util:include>
 
 <liferay-frontend:management-bar
 	searchContainerId="workflowDefinitions"
