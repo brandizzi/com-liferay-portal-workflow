@@ -14,28 +14,17 @@
 
 package com.liferay.portal.workflow.web.internal.portlet;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.kernel.workflow.WorkflowInstance;
-import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
-import com.liferay.portal.workflow.definition.link.web.internal.display.context.WorkflowDefinitionLinkDisplayContext;
-import com.liferay.portal.workflow.definition.web.internal.request.prepocessor.WorkflowDefinitionRenderPreprocessor;
 import com.liferay.portal.workflow.definition.link.web.internal.request.prepocessor.WorkflowDefinitionLinkRenderPreprocessor;
-import com.liferay.portal.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration;
+import com.liferay.portal.workflow.definition.web.internal.request.prepocessor.WorkflowDefinitionRenderPreprocessor;
+import com.liferay.portal.workflow.instance.web.internal.request.prepocessor.WorkflowInstanceDispatchPreprocessor;
+import com.liferay.portal.workflow.instance.web.internal.request.prepocessor.WorkflowInstanceProcessActionPreprocessor;
+import com.liferay.portal.workflow.instance.web.internal.request.prepocessor.WorkflowInstanceRenderPreprocessor;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.io.IOException;
-
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -44,9 +33,7 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -82,7 +69,8 @@ public class WorkflowPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		prepareWorkflowInstanceProcessAction(actionRequest);
+		workflowInstanceProcessActionPreprocessor.prepareProcessAction(
+			actionRequest, actionResponse);
 
 		super.processAction(actionRequest, actionResponse);
 	}
@@ -94,18 +82,12 @@ public class WorkflowPortlet extends MVCPortlet {
 
 		workflowDefinitionRenderPreprocessor.prepareRender(
 			renderRequest, renderResponse);
-		workflowDefinitionLinkRequestPreprocessor.prepareRender(
+		workflowDefinitionLinkRenderPreprocessor.prepareRender(
 			renderRequest, renderResponse);
-		prepareWorkflowInstanceRender(renderRequest);
+		workflowInstanceRenderPreprocessor.prepareRender(
+			renderRequest, renderResponse);
 
 		super.render(renderRequest, renderResponse);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		workflowInstanceWebConfiguration = ConfigurableUtil.createConfigurable(
-			WorkflowInstanceWebConfiguration.class, properties);
 	}
 
 	@Override
@@ -119,65 +101,11 @@ public class WorkflowPortlet extends MVCPortlet {
 			include("/instance/error.jsp", renderRequest, renderResponse);
 		}
 		else {
-			renderRequest.setAttribute(
-				WorkflowInstanceWebConfiguration.class.getName(),
-				workflowInstanceWebConfiguration);
+			workflowInstanceDispatchPreprocessor.prepareDispatch(
+				renderRequest, renderResponse);
 
 			super.doDispatch(renderRequest, renderResponse);
 		}
-	}
-
-	protected void prepareWorkflowInstanceProcessAction(
-		ActionRequest actionRequest) {
-
-		String actionName = ParamUtil.getString(
-			actionRequest, ActionRequest.ACTION_NAME);
-
-		if (StringUtil.equalsIgnoreCase(actionName, "invokeTaglibDiscussion")) {
-			hideDefaultSuccessMessage(actionRequest);
-		}
-	}
-
-	protected void prepareWorkflowInstanceRender(RenderRequest renderRequest)
-		throws PortletException {
-
-		try {
-			setWorkflowInstanceRenderRequestAttribute(renderRequest);
-		}
-		catch (Exception e) {
-			if (isSessionErrorException(e)) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
-				}
-
-				hideDefaultErrorMessage(renderRequest);
-
-				SessionErrors.add(renderRequest, e.getClass());
-			}
-			else {
-				throw new PortletException(e);
-			}
-		}
-	}
-
-	protected void setWorkflowInstanceRenderRequestAttribute(
-			RenderRequest renderRequest)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long workflowInstanceId = ParamUtil.getLong(
-			renderRequest, "workflowInstanceId");
-
-		WorkflowInstance workflowInstance = null;
-
-		if (workflowInstanceId != 0) {
-			workflowInstance = WorkflowInstanceManagerUtil.getWorkflowInstance(
-				themeDisplay.getCompanyId(), workflowInstanceId);
-		}
-
-		renderRequest.setAttribute(WebKeys.WORKFLOW_INSTANCE, workflowInstance);
 	}
 
 	@Reference(unbind = "-")
@@ -188,11 +116,16 @@ public class WorkflowPortlet extends MVCPortlet {
 	protected WorkflowDefinitionRenderPreprocessor
 		workflowDefinitionRenderPreprocessor;
 
-	protected volatile WorkflowInstanceWebConfiguration
-		workflowInstanceWebConfiguration;
+	@Reference(unbind = "-")
+	protected WorkflowInstanceDispatchPreprocessor
+		workflowInstanceDispatchPreprocessor;
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		WorkflowPortlet.class);
+	@Reference(unbind = "-")
+	protected WorkflowInstanceProcessActionPreprocessor
+		workflowInstanceProcessActionPreprocessor;
 
+	@Reference(unbind = "-")
+	protected WorkflowInstanceRenderPreprocessor
+		workflowInstanceRenderPreprocessor;
 
 }
