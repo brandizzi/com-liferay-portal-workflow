@@ -244,6 +244,8 @@ public class WorkflowInstanceViewDisplayContext
 	public PortletURL getViewPortletURL() {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
+		portletURL.setParameter("tab", "monitoring");
+
 		return portletURL;
 	}
 

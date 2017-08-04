@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
@@ -29,7 +31,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -42,6 +43,7 @@ page import="com.liferay.portal.workflow.instance.web.internal.display.context.M
 page import="com.liferay.portal.workflow.instance.web.internal.display.context.MyWorkflowInstanceViewDisplayContext" %><%@
 page import="com.liferay.portal.workflow.instance.web.internal.display.context.WorkflowInstanceEditDisplayContext" %><%@
 page import="com.liferay.portal.workflow.instance.web.internal.display.context.WorkflowInstanceViewDisplayContext" %><%@
+page import="com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
@@ -56,7 +58,7 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <%
 WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = null;
 
-if (portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE)) {
+if (portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE) || portletName.equals(WorkflowPortletKeys.WORKFLOW)) {
 	workflowInstanceViewDisplayContext = new WorkflowInstanceViewDisplayContext(liferayPortletRequest, liferayPortletResponse);
 }
 else {

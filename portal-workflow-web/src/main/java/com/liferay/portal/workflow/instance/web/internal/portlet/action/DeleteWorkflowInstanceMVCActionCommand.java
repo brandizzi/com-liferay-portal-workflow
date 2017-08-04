@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.workflow.instance.web.internal.constants.WorkflowInstancePortletKeys;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.io.Serializable;
 
@@ -54,6 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_INSTANCE,
 		"javax.portlet.name=" + WorkflowInstancePortletKeys.WORKFLOW_INSTANCE,
+		"javax.portlet.name=" + WorkflowPortletKeys.WORKFLOW,
 		"mvc.command.name=deleteWorkflowInstance"
 	},
 	service = MVCActionCommand.class
