@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -30,9 +29,9 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.workflow.definition.link.web.internal.display.context.WorkflowDefinitionLinkDisplayContext;
 import com.liferay.portal.workflow.definition.web.internal.request.prepocessor.WorkflowDefinitionRenderPreprocessor;
+import com.liferay.portal.workflow.definition.link.web.internal.request.prepocessor.WorkflowDefinitionLinkRenderPreprocessor;
 import com.liferay.portal.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
 
 import java.io.IOException;
 
@@ -95,7 +94,8 @@ public class WorkflowPortlet extends MVCPortlet {
 
 		workflowDefinitionRenderPreprocessor.prepareRender(
 			renderRequest, renderResponse);
-		prepareWorkflowDefinitionLinkRender(renderRequest, renderResponse);
+		workflowDefinitionLinkRequestPreprocessor.prepareRender(
+			renderRequest, renderResponse);
 		prepareWorkflowInstanceRender(renderRequest);
 
 		super.render(renderRequest, renderResponse);
@@ -124,25 +124,6 @@ public class WorkflowPortlet extends MVCPortlet {
 				workflowInstanceWebConfiguration);
 
 			super.doDispatch(renderRequest, renderResponse);
-		}
-	}
-
-	protected void prepareWorkflowDefinitionLinkRender(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
-
-		try {
-			WorkflowDefinitionLinkDisplayContext displayContext =
-				new WorkflowDefinitionLinkDisplayContext(
-					renderRequest, renderResponse,
-					_workflowDefinitionLinkLocalService);
-
-			renderRequest.setAttribute(
-				WorkflowWebKeys.WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT,
-				displayContext);
-		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
 		}
 	}
 
@@ -179,14 +160,6 @@ public class WorkflowPortlet extends MVCPortlet {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setWorkflowDefinitionLinkLocalService(
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
-
-		_workflowDefinitionLinkLocalService =
-			workflowDefinitionLinkLocalService;
-	}
-
 	protected void setWorkflowInstanceRenderRequestAttribute(
 			RenderRequest renderRequest)
 		throws PortalException {
@@ -206,6 +179,14 @@ public class WorkflowPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(WebKeys.WORKFLOW_INSTANCE, workflowInstance);
 	}
+
+	@Reference(unbind = "-")
+	protected WorkflowDefinitionLinkRenderPreprocessor
+		workflowDefinitionLinkRenderPreprocessor;
+
+	@Reference(unbind = "-")
+	protected WorkflowDefinitionRenderPreprocessor
+		workflowDefinitionRenderPreprocessor;
 
 	protected volatile WorkflowInstanceWebConfiguration
 		workflowInstanceWebConfiguration;
