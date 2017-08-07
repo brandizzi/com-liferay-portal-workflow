@@ -23,6 +23,7 @@ import com.liferay.portal.workflow.instance.web.internal.request.prepocessor.Wor
 import com.liferay.portal.workflow.instance.web.internal.request.prepocessor.WorkflowInstanceProcessActionPreprocessor;
 import com.liferay.portal.workflow.instance.web.internal.request.prepocessor.WorkflowInstanceRenderPreprocessor;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
 
 import java.io.IOException;
 
@@ -30,6 +31,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -64,13 +66,29 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class WorkflowPortlet extends MVCPortlet {
 
+	public boolean isWorkflowDefinitionLinkTabVisible() {
+		return true;
+	}
+
+	public boolean isWorkflowDefinitionTabVisible() {
+		return true;
+	}
+
+	public boolean isWorkflowInstanceTabVisible() {
+		return true;
+	}
+
 	@Override
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		workflowInstanceProcessActionPreprocessor.prepareProcessAction(
-			actionRequest, actionResponse);
+		setWorkflowTabsVisibilityPortletRequestAttribute(actionRequest);
+
+		if (isWorkflowDefinitionTabVisible()) {
+			workflowInstanceProcessActionPreprocessor.prepareProcessAction(
+				actionRequest, actionResponse);
+		}
 
 		super.processAction(actionRequest, actionResponse);
 	}
@@ -80,12 +98,22 @@ public class WorkflowPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		workflowDefinitionRenderPreprocessor.prepareRender(
-			renderRequest, renderResponse);
-		workflowDefinitionLinkRenderPreprocessor.prepareRender(
-			renderRequest, renderResponse);
-		workflowInstanceRenderPreprocessor.prepareRender(
-			renderRequest, renderResponse);
+		setWorkflowTabsVisibilityPortletRequestAttribute(renderRequest);
+
+		if (isWorkflowDefinitionLinkTabVisible()) {
+			workflowDefinitionLinkRenderPreprocessor.prepareRender(
+				renderRequest, renderResponse);
+		}
+
+		if (isWorkflowDefinitionTabVisible()) {
+			workflowDefinitionRenderPreprocessor.prepareRender(
+				renderRequest, renderResponse);
+		}
+
+		if (isWorkflowInstanceTabVisible()) {
+			workflowInstanceRenderPreprocessor.prepareRender(
+				renderRequest, renderResponse);
+		}
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -106,6 +134,20 @@ public class WorkflowPortlet extends MVCPortlet {
 
 			super.doDispatch(renderRequest, renderResponse);
 		}
+	}
+
+	protected void setWorkflowTabsVisibilityPortletRequestAttribute(
+		PortletRequest portletRequest) {
+
+		portletRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_VISIBILITY_DEFINITION_LINK,
+			isWorkflowDefinitionLinkTabVisible());
+		portletRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_VISIBILITY_DEFINITION,
+			isWorkflowDefinitionTabVisible());
+		portletRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_VISIBILITY_INSTANCE,
+			isWorkflowInstanceTabVisible());
 	}
 
 	@Reference(unbind = "-")

@@ -31,8 +31,7 @@ page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
 page import="com.liferay.portal.workflow.definition.link.web.internal.display.context.WorkflowDefinitionLinkDisplayContext" %><%@
 page import="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkDisplayTerms" %><%@
 page import="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkSearch" %><%@
-page import="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkSearchEntry" %><%@
-page import="com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys" %>
+page import="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkSearchEntry" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
