@@ -24,35 +24,41 @@ String searchURL = ParamUtil.getString(request, "searchURL");
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="workflowRenderURL">
-			<portlet:param name="tab" value="<%= WorkflowWebKeys.WORKFLOW_TAB_DEFINITION %>" />
-		</portlet:renderURL>
+		<c:if test="<%= workflowDefinitionTabVisible %>">
+			<portlet:renderURL var="workflowRenderURL">
+				<portlet:param name="tab" value="<%= WorkflowWebKeys.WORKFLOW_TAB_DEFINITION %>" />
+			</portlet:renderURL>
 
-		<aui:nav-item
-			href="<%= workflowRenderURL.toString() %>"
-			label="workflows"
-			selected="<%= tab.equals(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION) %>"
-		/>
+			<aui:nav-item
+				href="<%= workflowRenderURL.toString() %>"
+				label="workflows"
+				selected="<%= tab.equals(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION) %>"
+			/>
+		</c:if>
 
-		<portlet:renderURL var="schemesRenderURL">
-			<portlet:param name="tab" value="<%= WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK %>" />
-		</portlet:renderURL>
+		<c:if test="<%= workflowDefinitionLinkTabVisible %>">
+			<portlet:renderURL var="schemesRenderURL">
+				<portlet:param name="tab" value="<%= WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK %>" />
+			</portlet:renderURL>
 
-		<aui:nav-item
-			href="<%= schemesRenderURL.toString() %>"
-			label="schemes"
-			selected="<%= tab.equals(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK) %>"
-		/>
+			<aui:nav-item
+				href="<%= schemesRenderURL.toString() %>"
+				label="schemes"
+				selected="<%= tab.equals(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK) %>"
+			/>
+		</c:if>
 
-		<portlet:renderURL var="monitoringRenderURL">
-			<portlet:param name="tab" value="<%= WorkflowWebKeys.WORKFLOW_TAB_INSTANCE %>" />
-		</portlet:renderURL>
+		<c:if test="<%= workflowInstanceTabVisible %>">
+			<portlet:renderURL var="monitoringRenderURL">
+				<portlet:param name="tab" value="<%= WorkflowWebKeys.WORKFLOW_TAB_INSTANCE %>" />
+			</portlet:renderURL>
 
-		<aui:nav-item
-			href="<%= monitoringRenderURL.toString() %>"
-			label="monitoring"
-			selected="<%= tab.equals(WorkflowWebKeys.WORKFLOW_TAB_INSTANCE) %>"
-		/>
+			<aui:nav-item
+				href="<%= monitoringRenderURL.toString() %>"
+				label="monitoring"
+				selected="<%= tab.equals(WorkflowWebKeys.WORKFLOW_TAB_INSTANCE) %>"
+			/>
+		</c:if>
 	</aui:nav>
 
 	<aui:nav-bar-search>
