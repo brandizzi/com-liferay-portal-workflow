@@ -66,6 +66,18 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class WorkflowPortlet extends MVCPortlet {
 
+	public String getDefaultTab() {
+		if (isWorkflowDefinitionTabVisible()) {
+			return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION;
+		}
+
+		if (isWorkflowDefinitionLinkTabVisible()) {
+			return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK;
+		}
+
+		return WorkflowWebKeys.WORKFLOW_TAB_INSTANCE;
+	}
+
 	public boolean isWorkflowDefinitionLinkTabVisible() {
 		return true;
 	}
@@ -139,6 +151,8 @@ public class WorkflowPortlet extends MVCPortlet {
 	protected void setWorkflowTabsVisibilityPortletRequestAttribute(
 		PortletRequest portletRequest) {
 
+		portletRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());
 		portletRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_VISIBILITY_DEFINITION_LINK,
 			isWorkflowDefinitionLinkTabVisible());

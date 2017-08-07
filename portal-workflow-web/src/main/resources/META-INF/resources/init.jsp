@@ -24,8 +24,10 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys" %>
 
-<%
-String tab = ParamUtil.get(request, "tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION);
-%>
-
 <portlet:defineObjects />
+
+<%
+String defaultTab = (String)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_DEFAULT_TAB);
+
+String tab = ParamUtil.get(request, "tab", defaultTab);
+%>
