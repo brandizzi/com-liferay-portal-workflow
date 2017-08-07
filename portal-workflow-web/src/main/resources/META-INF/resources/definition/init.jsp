@@ -45,8 +45,7 @@ page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
 page import="com.liferay.portal.workflow.definition.web.internal.dao.search.WorkflowDefinitionResultRowSplitter" %><%@
 page import="com.liferay.portal.workflow.definition.web.internal.display.context.WorkflowDefinitionDisplayContext" %><%@
 page import="com.liferay.portal.workflow.definition.web.internal.search.WorkflowDefinitionDisplayTerms" %><%@
-page import="com.liferay.portal.workflow.definition.web.internal.search.WorkflowDefinitionSearch" %><%@
-page import="com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys" %>
+page import="com.liferay.portal.workflow.definition.web.internal.search.WorkflowDefinitionSearch" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %>
