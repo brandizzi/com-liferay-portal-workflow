@@ -53,9 +53,17 @@ String searchURL = ParamUtil.getString(request, "searchURL");
 				<portlet:param name="tab" value="<%= WorkflowWebKeys.WORKFLOW_TAB_INSTANCE %>" />
 			</portlet:renderURL>
 
+			<%
+			String monitoringLabel = "monitoring";
+
+			if (portletName.equals(WorkflowPortletKeys.USER_WORKFLOW)) {
+				monitoringLabel = "my-submissions";
+			}
+			%>
+
 			<aui:nav-item
 				href="<%= monitoringRenderURL.toString() %>"
-				label="monitoring"
+				label="<%= monitoringLabel %>"
 				selected="<%= tab.equals(WorkflowWebKeys.WORKFLOW_TAB_INSTANCE) %>"
 			/>
 		</c:if>
