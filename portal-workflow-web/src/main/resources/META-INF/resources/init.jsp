@@ -22,6 +22,7 @@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys" %><%@
 page import="com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys" %>
 
 <portlet:defineObjects />

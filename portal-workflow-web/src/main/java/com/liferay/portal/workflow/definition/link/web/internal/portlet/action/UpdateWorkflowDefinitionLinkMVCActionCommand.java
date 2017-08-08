@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.workflow.definition.link.web.internal.constants.WorkflowDefinitionLinkPortletKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.util.Enumeration;
@@ -37,9 +36,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK,
-		"javax.portlet.name=" + WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK_CONTROL_PANEL,
-		"javax.portlet.name=" + WorkflowPortletKeys.WORKFLOW,
+		"javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
+		"javax.portlet.name=" + WorkflowPortletKeys.SITE_ADMINISTRATION_WORKFLOW,
 		"mvc.command.name=updateWorkflowDefinitionLink"
 	},
 	service = MVCActionCommand.class

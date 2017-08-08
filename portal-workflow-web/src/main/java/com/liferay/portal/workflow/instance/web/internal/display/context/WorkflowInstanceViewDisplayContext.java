@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.workflow.WorkflowLogManagerUtil;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 import com.liferay.portal.workflow.instance.web.internal.search.WorkflowInstanceSearch;
 import com.liferay.portal.workflow.instance.web.internal.util.WorkflowInstancePortletUtil;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.io.Serializable;
 
@@ -175,7 +175,7 @@ public class WorkflowInstanceViewDisplayContext
 
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = portalPreferences.getValue(
-				PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-col",
+				WorkflowPortletKeys.USER_WORKFLOW, "order-by-col",
 				"last-activity-date");
 		}
 		else {
@@ -183,7 +183,7 @@ public class WorkflowInstanceViewDisplayContext
 
 			if (saveOrderBy) {
 				portalPreferences.setValue(
-					PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-col",
+					WorkflowPortletKeys.USER_WORKFLOW, "order-by-col",
 					_orderByCol);
 			}
 		}
@@ -200,14 +200,15 @@ public class WorkflowInstanceViewDisplayContext
 
 		if (Validator.isNull(_orderByType)) {
 			_orderByType = portalPreferences.getValue(
-				PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-type", "asc");
+				WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-type",
+				"asc");
 		}
 		else {
 			boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
 
 			if (saveOrderBy) {
 				portalPreferences.setValue(
-					PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-type",
+					WorkflowPortletKeys.USER_WORKFLOW, "order-by-type",
 					_orderByType);
 			}
 		}

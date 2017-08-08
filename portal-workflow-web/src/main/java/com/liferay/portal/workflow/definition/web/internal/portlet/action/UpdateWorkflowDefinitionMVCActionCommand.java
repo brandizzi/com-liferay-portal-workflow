@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.workflow.definition.web.internal.constants.WorkflowDefinitionPortletKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.util.Locale;
@@ -49,8 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + WorkflowDefinitionPortletKeys.WORKFLOW_DEFINITION,
-		"javax.portlet.name=" + WorkflowPortletKeys.WORKFLOW,
+		"javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
 		"mvc.command.name=updateWorkflowDefinition"
 	},
 	service = MVCActionCommand.class

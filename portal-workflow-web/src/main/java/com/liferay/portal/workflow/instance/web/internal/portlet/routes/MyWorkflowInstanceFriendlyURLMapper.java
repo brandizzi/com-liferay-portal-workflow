@@ -16,7 +16,7 @@ package com.liferay.portal.workflow.instance.web.internal.portlet.routes;
 
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
-import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
-		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_INSTANCE
+		"javax.portlet.name=" + WorkflowPortletKeys.USER_WORKFLOW
 	},
 	service = FriendlyURLMapper.class
 )

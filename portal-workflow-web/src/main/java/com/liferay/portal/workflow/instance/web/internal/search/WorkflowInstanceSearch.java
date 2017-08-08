@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.workflow.instance.web.internal.util.WorkflowInstancePortletUtil;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,16 +64,17 @@ public class WorkflowInstanceSearch extends SearchContainer<WorkflowInstance> {
 			Validator.isNotNull(orderByType)) {
 
 			preferences.setValue(
-				PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-col", orderByCol);
+				WorkflowPortletKeys.USER_WORKFLOW, "order-by-col", orderByCol);
 			preferences.setValue(
-				PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-type", orderByType);
+				WorkflowPortletKeys.USER_WORKFLOW, "order-by-type",
+				orderByType);
 		}
 		else {
 			orderByCol = preferences.getValue(
-				PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-col",
+				WorkflowPortletKeys.USER_WORKFLOW, "order-by-col",
 				"last-activity-date");
 			orderByType = preferences.getValue(
-				PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-type", "asc");
+				WorkflowPortletKeys.USER_WORKFLOW, "order-by-type", "asc");
 		}
 
 		OrderByComparator<WorkflowInstance> orderByComparator =

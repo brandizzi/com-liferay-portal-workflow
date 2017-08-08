@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
-import com.liferay.portal.workflow.definition.link.web.internal.constants.WorkflowDefinitionLinkPortletKeys;
 import com.liferay.portal.workflow.definition.link.web.internal.display.context.util.WorkflowDefinitionLinkRequestHelper;
 import com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkSearch;
 import com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkSearchEntry;
@@ -52,6 +51,7 @@ import com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowD
 import com.liferay.portal.workflow.definition.link.web.internal.util.WorkflowDefinitionLinkPortletUtil;
 import com.liferay.portal.workflow.definition.link.web.internal.util.filter.WorkflowDefinitionLinkSearchEntryLabelPredicateFilter;
 import com.liferay.portal.workflow.definition.link.web.internal.util.filter.WorkflowDefinitionLinkSearchEntryResourcePredicateFilter;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -141,18 +141,16 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = _portalPreferences.getValue(
-				WorkflowDefinitionLinkPortletKeys.
-					WORKFLOW_DEFINITION_LINK_CONTROL_PANEL,
-				"order-by-col", "resource");
+				WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW, "order-by-col",
+				"resource");
 		}
 		else {
 			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
-					WorkflowDefinitionLinkPortletKeys.
-						WORKFLOW_DEFINITION_LINK_CONTROL_PANEL,
-					"order-by-col", _orderByCol);
+					WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW, "order-by-col",
+					_orderByCol);
 			}
 		}
 
@@ -168,18 +166,16 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 		if (Validator.isNull(_orderByType)) {
 			_orderByType = _portalPreferences.getValue(
-				WorkflowDefinitionLinkPortletKeys.
-					WORKFLOW_DEFINITION_LINK_CONTROL_PANEL,
-				"order-by-type", "asc");
+				WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW, "order-by-type",
+				"asc");
 		}
 		else {
 			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
-					WorkflowDefinitionLinkPortletKeys.
-						WORKFLOW_DEFINITION_LINK_CONTROL_PANEL,
-					"order-by-type", _orderByType);
+					WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW, "order-by-type",
+					_orderByType);
 			}
 		}
 
@@ -471,10 +467,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 	protected boolean isControlPanelPortlet() {
 		String portletName = getPortletName();
 
-		if (portletName.equals(
-				WorkflowDefinitionLinkPortletKeys.
-					WORKFLOW_DEFINITION_LINK_CONTROL_PANEL)) {
-
+		if (portletName.equals(WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW)) {
 			return true;
 		}
 

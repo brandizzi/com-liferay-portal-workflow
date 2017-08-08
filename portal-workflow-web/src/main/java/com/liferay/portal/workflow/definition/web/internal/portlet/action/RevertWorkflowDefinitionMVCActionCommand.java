@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
-import com.liferay.portal.workflow.definition.web.internal.constants.WorkflowDefinitionPortletKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import javax.portlet.ActionRequest;
@@ -34,8 +33,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + WorkflowDefinitionPortletKeys.WORKFLOW_DEFINITION,
-		"javax.portlet.name=" + WorkflowPortletKeys.WORKFLOW,
+		"javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
 		"mvc.command.name=revertWorkflowDefinition"
 	},
 	service = MVCActionCommand.class
