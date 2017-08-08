@@ -141,16 +141,16 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = _portalPreferences.getValue(
-				WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW, "order-by-col",
-				"resource");
+				WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
+				"definition-link-order-by-col", "resource");
 		}
 		else {
 			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
-					WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW, "order-by-col",
-					_orderByCol);
+					WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
+					"definition-link-order-by-col", _orderByCol);
 			}
 		}
 
@@ -166,16 +166,16 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 		if (Validator.isNull(_orderByType)) {
 			_orderByType = _portalPreferences.getValue(
-				WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW, "order-by-type",
-				"asc");
+				WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
+				"definition-link-order-by-type", "asc");
 		}
 		else {
 			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
-					WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW, "order-by-type",
-					_orderByType);
+					WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
+					"definition-link-order-by-type", _orderByType);
 			}
 		}
 
