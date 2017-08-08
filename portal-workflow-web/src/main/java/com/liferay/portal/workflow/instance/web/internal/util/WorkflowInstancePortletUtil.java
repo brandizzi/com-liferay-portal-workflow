@@ -47,12 +47,12 @@ public class WorkflowInstancePortletUtil {
 					WorkflowInstanceWebConfiguration.class.getName());
 
 			displayStyle = portalPreferences.getValue(
-				WorkflowPortletKeys.USER_WORKFLOW, "display-style",
+				WorkflowPortletKeys.USER_WORKFLOW, "instance-display-style",
 				workflowTaskWebConfiguration.defaultDisplayView());
 		}
 		else if (ArrayUtil.contains(displayViews, displayStyle)) {
 			portalPreferences.setValue(
-				WorkflowPortletKeys.USER_WORKFLOW, "display-style",
+				WorkflowPortletKeys.USER_WORKFLOW, "instance-display-style",
 				displayStyle);
 		}
 

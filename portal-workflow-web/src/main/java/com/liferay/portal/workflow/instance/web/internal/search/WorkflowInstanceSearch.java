@@ -64,17 +64,19 @@ public class WorkflowInstanceSearch extends SearchContainer<WorkflowInstance> {
 			Validator.isNotNull(orderByType)) {
 
 			preferences.setValue(
-				WorkflowPortletKeys.USER_WORKFLOW, "order-by-col", orderByCol);
+				WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-col",
+				orderByCol);
 			preferences.setValue(
-				WorkflowPortletKeys.USER_WORKFLOW, "order-by-type",
+				WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-type",
 				orderByType);
 		}
 		else {
 			orderByCol = preferences.getValue(
-				WorkflowPortletKeys.USER_WORKFLOW, "order-by-col",
+				WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-col",
 				"last-activity-date");
 			orderByType = preferences.getValue(
-				WorkflowPortletKeys.USER_WORKFLOW, "order-by-type", "asc");
+				WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-type",
+				"asc");
 		}
 
 		OrderByComparator<WorkflowInstance> orderByComparator =

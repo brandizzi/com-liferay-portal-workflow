@@ -175,7 +175,7 @@ public class WorkflowInstanceViewDisplayContext
 
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = portalPreferences.getValue(
-				WorkflowPortletKeys.USER_WORKFLOW, "order-by-col",
+				WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-col",
 				"last-activity-date");
 		}
 		else {
@@ -183,7 +183,7 @@ public class WorkflowInstanceViewDisplayContext
 
 			if (saveOrderBy) {
 				portalPreferences.setValue(
-					WorkflowPortletKeys.USER_WORKFLOW, "order-by-col",
+					WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-col",
 					_orderByCol);
 			}
 		}
@@ -208,7 +208,7 @@ public class WorkflowInstanceViewDisplayContext
 
 			if (saveOrderBy) {
 				portalPreferences.setValue(
-					WorkflowPortletKeys.USER_WORKFLOW, "order-by-type",
+					WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-type",
 					_orderByType);
 			}
 		}
