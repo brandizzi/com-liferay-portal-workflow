@@ -37,13 +37,11 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowInstance" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowLog" %><%@
-page import="com.liferay.portal.workflow.instance.web.internal.constants.WorkflowInstancePortletKeys" %><%@
 page import="com.liferay.portal.workflow.instance.web.internal.dao.search.WorkflowInstanceResultRowSplitter" %><%@
 page import="com.liferay.portal.workflow.instance.web.internal.display.context.MyWorkflowInstanceEditDisplayContext" %><%@
 page import="com.liferay.portal.workflow.instance.web.internal.display.context.MyWorkflowInstanceViewDisplayContext" %><%@
 page import="com.liferay.portal.workflow.instance.web.internal.display.context.WorkflowInstanceEditDisplayContext" %><%@
 page import="com.liferay.portal.workflow.instance.web.internal.display.context.WorkflowInstanceViewDisplayContext" %><%@
-page import="com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
@@ -58,11 +56,11 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <%
 WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = null;
 
-if (portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE) || portletName.equals(WorkflowPortletKeys.WORKFLOW)) {
-	workflowInstanceViewDisplayContext = new WorkflowInstanceViewDisplayContext(liferayPortletRequest, liferayPortletResponse);
+if (portletName.equals(WorkflowPortletKeys.USER_WORKFLOW)) {
+	workflowInstanceViewDisplayContext = new MyWorkflowInstanceViewDisplayContext(liferayPortletRequest, liferayPortletResponse);
 }
 else {
-	workflowInstanceViewDisplayContext = new MyWorkflowInstanceViewDisplayContext(liferayPortletRequest, liferayPortletResponse);
+	workflowInstanceViewDisplayContext = new WorkflowInstanceViewDisplayContext(liferayPortletRequest, liferayPortletResponse);
 }
 %>
 

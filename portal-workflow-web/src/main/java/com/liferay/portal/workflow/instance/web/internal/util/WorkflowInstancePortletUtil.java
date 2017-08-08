@@ -19,11 +19,11 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 import com.liferay.portal.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import javax.portlet.PortletRequest;
 
@@ -47,12 +47,12 @@ public class WorkflowInstancePortletUtil {
 					WorkflowInstanceWebConfiguration.class.getName());
 
 			displayStyle = portalPreferences.getValue(
-				PortletKeys.MY_WORKFLOW_INSTANCE, "display-style",
+				WorkflowPortletKeys.USER_WORKFLOW, "display-style",
 				workflowTaskWebConfiguration.defaultDisplayView());
 		}
 		else if (ArrayUtil.contains(displayViews, displayStyle)) {
 			portalPreferences.setValue(
-				PortletKeys.MY_WORKFLOW_INSTANCE, "display-style",
+				WorkflowPortletKeys.USER_WORKFLOW, "display-style",
 				displayStyle);
 		}
 
