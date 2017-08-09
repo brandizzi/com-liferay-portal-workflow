@@ -70,7 +70,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 					</liferay-ui:section>
 
 					<liferay-ui:section>
-						<div class="sidebar-body">
+						<div class="sidebar-body workflow-definition-sidebar">
 							<liferay-util:include page="/definition/view_workflow_definition_history.jsp" servletContext="<%= application %>">
 								<liferay-util:param name="redirect" value="<%= redirect %>" />
 							</liferay-util:include>
