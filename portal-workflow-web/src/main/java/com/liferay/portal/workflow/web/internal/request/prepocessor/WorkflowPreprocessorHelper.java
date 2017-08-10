@@ -18,13 +18,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
@@ -59,14 +60,14 @@ public class WorkflowPreprocessorHelper {
 	public void hideDefaultErrorMessage(PortletRequest portletRequest) {
 		SessionMessages.add(
 			portletRequest,
-			PortalUtil.getPortletId(portletRequest) +
+			_portal.getPortletId(portletRequest) +
 				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 	}
 
 	public void hideDefaultSuccessMessage(PortletRequest portletRequest) {
 		SessionMessages.add(
 			portletRequest,
-			PortalUtil.getPortletId(portletRequest) +
+			_portal.getPortletId(portletRequest) +
 				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 	}
 
@@ -84,5 +85,8 @@ public class WorkflowPreprocessorHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowPreprocessorHelper.class);
+
+	@Reference
+	private Portal _portal;
 
 }
