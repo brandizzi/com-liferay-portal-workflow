@@ -16,12 +16,12 @@ package com.liferay.portal.workflow.web.internal.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.workflow.definition.link.web.internal.request.prepocessor.WorkflowDefinitionLinkRenderPreprocessor;
-import com.liferay.portal.workflow.definition.web.internal.request.prepocessor.WorkflowDefinitionRenderPreprocessor;
-import com.liferay.portal.workflow.instance.web.internal.request.prepocessor.WorkflowInstanceDispatchPreprocessor;
-import com.liferay.portal.workflow.instance.web.internal.request.prepocessor.WorkflowInstanceProcessActionPreprocessor;
-import com.liferay.portal.workflow.instance.web.internal.request.prepocessor.WorkflowInstanceRenderPreprocessor;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowDefinitionLinkRenderPreprocessor;
+import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowDefinitionRenderPreprocessor;
+import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceDispatchPreprocessor;
+import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceProcessActionPreprocessor;
+import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceRenderPreprocessor;
 
 import java.io.IOException;
 

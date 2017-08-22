@@ -28,10 +28,10 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
-page import="com.liferay.portal.workflow.definition.link.web.internal.display.context.WorkflowDefinitionLinkDisplayContext" %><%@
-page import="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkDisplayTerms" %><%@
-page import="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkSearch" %><%@
-page import="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkSearchEntry" %>
+page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowDefinitionLinkDisplayContext" %><%@
+page import="com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkDisplayTerms" %><%@
+page import="com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkSearch" %><%@
+page import="com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkSearchEntry" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
