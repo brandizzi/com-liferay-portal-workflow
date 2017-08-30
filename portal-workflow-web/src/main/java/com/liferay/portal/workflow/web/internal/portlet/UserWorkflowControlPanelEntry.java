@@ -14,7 +14,11 @@
 
 package com.liferay.portal.workflow.web.internal.portlet;
 
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -24,9 +28,26 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW},
+	property = {"javax.portlet.name=" + WorkflowPortletKeys.USER_WORKFLOW},
 	service = ControlPanelEntry.class
 )
 public class UserWorkflowControlPanelEntry
 	extends com.liferay.portal.workflow.WorkflowControlPanelEntry {
+
+	@Override
+	protected boolean hasPermissionImplicitlyGranted(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
+		throws Exception {
+
+		if (WorkflowInstanceManagerUtil.getWorkflowInstanceCount(
+				permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+				null, null, null) > 0) {
+
+			return true;
+		}
+
+		return super.hasPermissionImplicitlyGranted(
+			permissionChecker, group, portlet);
+	}
+
 }
