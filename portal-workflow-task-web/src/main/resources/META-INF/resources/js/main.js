@@ -53,7 +53,7 @@ AUI.add(
 				return content;
 			},
 
-			_showPopup: function(url, content, title, randomId, height) {
+			_getForm: function(url, content, comments) {
 				var instance = this;
 
 				var form = A.Node.create('<form />');
@@ -74,6 +74,18 @@ AUI.add(
 					form.append(comments);
 					comments.show();
 				}
+
+				return form;
+			},
+
+			_showPopup: function(url, content, title, randomId, height) {
+				var instance = this;
+
+				var comments = instance._getComments(randomId);
+
+				var content = instance._getContent(content, title, randomId);
+
+				var form = instance._getForm(url, content, comments);
 
 				instance._openDialog(form, title, height);
 			},
