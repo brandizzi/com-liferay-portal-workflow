@@ -25,13 +25,8 @@ AUI.add(
 				WorkflowTasks._showPopup(icon.attr('href'), A.one(content), title, randomId, height);
 			},
 
-			_showPopup: function(url, content, title, randomId, height) {
+			_getComments: function(randomId) {
 				var instance = this;
-
-				var form = A.Node.create('<form />');
-
-				form.setAttribute('action', url);
-				form.setAttribute('method', 'POST');
 
 				var comments = A.one('#' + randomId + 'updateComments');
 
@@ -42,12 +37,33 @@ AUI.add(
 					comments = instance._comments[randomId];
 				}
 
+				return comments;
+			},
+
+			_getContent: function(content, title, randomId) {
+				var instance = this;
+
 				if (content && !instance._content[randomId]) {
 					instance._content[randomId] = content;
 				}
 				else if (!content && title && title.trim().indexOf('Update Due Date') !== -1) {
 					content = instance._content[randomId];
 				}
+
+				return content;
+			},
+
+			_showPopup: function(url, content, title, randomId, height) {
+				var instance = this;
+
+				var form = A.Node.create('<form />');
+
+				form.setAttribute('action', url);
+				form.setAttribute('method', 'POST');
+
+				var comments = instance._getComments(randomId);
+
+				content = instance._getContent(content, title, randomId);
 
 				if (content) {
 					form.append(content);
