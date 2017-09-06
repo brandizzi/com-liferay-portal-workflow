@@ -78,18 +78,6 @@ AUI.add(
 				return form;
 			},
 
-			_showPopup: function(url, content, title, randomId, height) {
-				var instance = this;
-
-				var comments = instance._getComments(randomId);
-
-				var content = instance._getContent(content, title, randomId);
-
-				var form = instance._getForm(url, content, comments);
-
-				instance._openDialog(form, title, height);
-			},
-
 			_openDialog: function(form, title, height) {
 				var instance = this;
 
@@ -138,6 +126,18 @@ AUI.add(
 						title: A.Lang.String.escapeHTML(title)
 					}
 				);
+			},
+
+			_showPopup: function(url, content, title, randomId, height) {
+				var instance = this;
+
+				var comments = instance._getComments(randomId);
+
+				var content = instance._getContent(content, title, randomId);
+
+				var form = instance._getForm(url, content, comments);
+
+				instance._openDialog(form, title, height);
 			},
 
 			_comments: {},
