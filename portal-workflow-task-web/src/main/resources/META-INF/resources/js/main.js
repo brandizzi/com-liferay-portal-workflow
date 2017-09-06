@@ -59,6 +59,12 @@ AUI.add(
 					comments.show();
 				}
 
+				instance._openDialog(form, title, height);
+			},
+
+			_openDialog: function(form, title, height) {
+				var instance = this;
+
 				var dialog = Liferay.Util.Window.getWindow(
 					{
 						dialog: {
