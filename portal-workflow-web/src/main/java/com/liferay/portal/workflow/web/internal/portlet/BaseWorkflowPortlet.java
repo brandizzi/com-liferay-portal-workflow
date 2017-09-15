@@ -43,18 +43,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
-	public String getDefaultTab() {
-		if (isWorkflowDefinitionTabVisible()) {
-			return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION;
-		}
-
-		if (isWorkflowDefinitionLinkTabVisible()) {
-			return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK;
-		}
-
-		return WorkflowWebKeys.WORKFLOW_TAB_INSTANCE;
-	}
-
 	public WorkflowPortletTab getDefaultWorkflowPortletTab() {
 		List<WorkflowPortletTab> workflowPortletTabs = getWorkflowPortletTabs();
 
@@ -104,7 +92,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		setWorkflowTabsVisibilityPortletRequestAttribute(actionRequest);
+		setPortletTabsRequestAttributes(actionRequest);
 
 		if (isWorkflowDefinitionTabVisible()) {
 			workflowInstanceProcessActionPreprocessor.prepareProcessAction(
@@ -119,7 +107,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		setWorkflowTabsVisibilityPortletRequestAttribute(renderRequest);
+		setPortletTabsRequestAttributes(renderRequest);
 
 		if (isWorkflowDefinitionLinkTabVisible()) {
 			workflowDefinitionLinkRenderPreprocessor.prepareRender(
@@ -173,7 +161,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		return getDefaultWorkflowPortletTab();
 	}
 
-	protected void setWorkflowTabsVisibilityPortletRequestAttribute(
+	protected void setPortletTabsRequestAttributes(
 		PortletRequest portletRequest) {
 
 		portletRequest.setAttribute(
@@ -181,18 +169,6 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			getSelectedWorkflowPortletTab(portletRequest));
 		portletRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_PORTLET_TABS, getWorkflowPortletTabs());
-
-		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());
-		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_VISIBILITY_DEFINITION,
-			isWorkflowDefinitionTabVisible());
-		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_VISIBILITY_DEFINITION_LINK,
-			isWorkflowDefinitionLinkTabVisible());
-		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_VISIBILITY_INSTANCE,
-			isWorkflowInstanceTabVisible());
 	}
 
 	@Reference(unbind = "-")
