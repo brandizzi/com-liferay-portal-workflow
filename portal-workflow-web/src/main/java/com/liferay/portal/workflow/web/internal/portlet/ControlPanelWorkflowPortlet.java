@@ -15,10 +15,17 @@
 package com.liferay.portal.workflow.web.internal.portlet;
 
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adam Brandizzi
@@ -50,6 +57,13 @@ import org.osgi.service.component.annotations.Component;
 public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 
 	@Override
+	public List<WorkflowPortletTab> getWorkflowPortletTabs() {
+		return Arrays.asList(
+			_workflowDefinitionPortletTab, _workflowDefinitionLinkPortletTab,
+			_workflowInstancePortletTab);
+	}
+
+	@Override
 	public boolean isWorkflowDefinitionLinkTabVisible() {
 		return true;
 	}
@@ -63,5 +77,26 @@ public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 	public boolean isWorkflowInstanceTabVisible() {
 		return true;
 	}
+
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(com.liferay.portal.workflow.web.portlet.tab.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK + ")",
+		unbind = "-"
+	)
+	private WorkflowPortletTab _workflowDefinitionLinkPortletTab;
+
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(com.liferay.portal.workflow.web.portlet.tab.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION + ")",
+		unbind = "-"
+	)
+	private WorkflowPortletTab _workflowDefinitionPortletTab;
+
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(com.liferay.portal.workflow.web.portlet.tab.name=" + WorkflowWebKeys.WORKFLOW_TAB_INSTANCE + ")",
+		unbind = "-"
+	)
+	private WorkflowPortletTab _workflowInstancePortletTab;
 
 }

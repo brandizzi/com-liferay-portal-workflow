@@ -23,8 +23,11 @@ import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowDefi
 import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceDispatchPreprocessor;
 import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceProcessActionPreprocessor;
 import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceRenderPreprocessor;
+import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import java.io.IOException;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -51,6 +54,8 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 		return WorkflowWebKeys.WORKFLOW_TAB_INSTANCE;
 	}
+
+	public abstract List<WorkflowPortletTab> getWorkflowPortletTabs();
 
 	public abstract boolean isWorkflowDefinitionLinkTabVisible();
 

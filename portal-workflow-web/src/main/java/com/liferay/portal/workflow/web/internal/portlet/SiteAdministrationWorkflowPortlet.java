@@ -15,10 +15,16 @@
 package com.liferay.portal.workflow.web.internal.portlet;
 
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
@@ -50,6 +56,11 @@ import org.osgi.service.component.annotations.Component;
 public class SiteAdministrationWorkflowPortlet extends BaseWorkflowPortlet {
 
 	@Override
+	public List<WorkflowPortletTab> getWorkflowPortletTabs() {
+		return Arrays.asList(_workflowDefinitionLinkPortletTab);
+	}
+
+	@Override
 	public boolean isWorkflowDefinitionLinkTabVisible() {
 		return true;
 	}
@@ -63,5 +74,11 @@ public class SiteAdministrationWorkflowPortlet extends BaseWorkflowPortlet {
 	public boolean isWorkflowInstanceTabVisible() {
 		return false;
 	}
+
+	@Reference(
+		target = "(com.liferay.portal.workflow.web.portlet.tab.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK + ")",
+		unbind = "-"
+	)
+	private WorkflowPortletTab _workflowDefinitionLinkPortletTab;
 
 }
