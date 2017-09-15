@@ -179,6 +179,8 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		portletRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_SELECTED_WORKFLOW_PORTLET_TAB,
 			getSelectedWorkflowPortletTab(portletRequest));
+		portletRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_PORTLET_TABS, getWorkflowPortletTabs());
 
 		portletRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());
