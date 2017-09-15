@@ -62,21 +62,6 @@ public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 			_workflowInstancePortletTab);
 	}
 
-	@Override
-	public boolean isWorkflowDefinitionLinkTabVisible() {
-		return true;
-	}
-
-	@Override
-	public boolean isWorkflowDefinitionTabVisible() {
-		return true;
-	}
-
-	@Override
-	public boolean isWorkflowInstanceTabVisible() {
-		return true;
-	}
-
 	@Reference(
 		target = "(com.liferay.portal.workflow.web.portlet.tab.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK + ")",
 		unbind = "-"
