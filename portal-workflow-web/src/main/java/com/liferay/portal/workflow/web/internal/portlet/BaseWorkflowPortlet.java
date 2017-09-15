@@ -55,6 +55,12 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		return WorkflowWebKeys.WORKFLOW_TAB_INSTANCE;
 	}
 
+	public WorkflowPortletTab getDefaultWorkflowPortletTab() {
+		List<WorkflowPortletTab> workflowPortletTabs = getWorkflowPortletTabs();
+
+		return workflowPortletTabs.get(0);
+	}
+
 	public abstract List<WorkflowPortletTab> getWorkflowPortletTabs();
 
 	public boolean isWorkflowDefinitionLinkTabVisible() {
@@ -151,8 +157,28 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		}
 	}
 
+	protected WorkflowPortletTab getSelectedWorkflowPortletTab(
+		PortletRequest portletRequest) {
+
+		String tab = portletRequest.getParameter("tab");
+
+		List<WorkflowPortletTab> workflowPortletTabs = getWorkflowPortletTabs();
+
+		for (WorkflowPortletTab workflowPortletTab : workflowPortletTabs) {
+			if (workflowPortletTab.getName().equals(tab)) {
+				return workflowPortletTab;
+			}
+		}
+
+		return getDefaultWorkflowPortletTab();
+	}
+
 	protected void setWorkflowTabsVisibilityPortletRequestAttribute(
 		PortletRequest portletRequest) {
+
+		portletRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_SELECTED_WORKFLOW_PORTLET_TAB,
+			getSelectedWorkflowPortletTab(portletRequest));
 
 		portletRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());

@@ -27,6 +27,9 @@ public class WorkflowWebKeys {
 	public static final String WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT =
 		"WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT";
 
+	public static final String WORKFLOW_SELECTED_WORKFLOW_PORTLET_TAB =
+		"SELECTED_WORFLOW_PORTLET_TAB";
+
 	public static final String WORKFLOW_TAB_DEFINITION = "workflows";
 
 	public static final String WORKFLOW_TAB_DEFINITION_LINK = "schemes";
