@@ -51,42 +51,6 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 	public abstract List<WorkflowPortletTab> getWorkflowPortletTabs();
 
-	public boolean isWorkflowDefinitionLinkTabVisible() {
-		for (WorkflowPortletTab workflowPortletTab : getWorkflowPortletTabs()) {
-			String name = workflowPortletTab.getName();
-
-			if (name.equals(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public boolean isWorkflowDefinitionTabVisible() {
-		for (WorkflowPortletTab workflowPortletTab : getWorkflowPortletTabs()) {
-			String name = workflowPortletTab.getName();
-
-			if (name.equals(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public boolean isWorkflowInstanceTabVisible() {
-		for (WorkflowPortletTab workflowPortletTab : getWorkflowPortletTabs()) {
-			String name = workflowPortletTab.getName();
-
-			if (name.equals(WorkflowWebKeys.WORKFLOW_TAB_INSTANCE)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	@Override
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
