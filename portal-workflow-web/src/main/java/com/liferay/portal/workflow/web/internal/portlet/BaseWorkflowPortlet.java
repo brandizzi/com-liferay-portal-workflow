@@ -18,11 +18,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowDefinitionLinkRenderPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowDefinitionRenderPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceDispatchPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceProcessActionPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceRenderPreprocessor;
 import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import java.io.IOException;
@@ -35,8 +30,6 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
@@ -127,25 +120,5 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		portletRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_PORTLET_TABS, getWorkflowPortletTabs());
 	}
-
-	@Reference(unbind = "-")
-	protected WorkflowDefinitionLinkRenderPreprocessor
-		workflowDefinitionLinkRenderPreprocessor;
-
-	@Reference(unbind = "-")
-	protected WorkflowDefinitionRenderPreprocessor
-		workflowDefinitionRenderPreprocessor;
-
-	@Reference(unbind = "-")
-	protected WorkflowInstanceDispatchPreprocessor
-		workflowInstanceDispatchPreprocessor;
-
-	@Reference(unbind = "-")
-	protected WorkflowInstanceProcessActionPreprocessor
-		workflowInstanceProcessActionPreprocessor;
-
-	@Reference(unbind = "-")
-	protected WorkflowInstanceRenderPreprocessor
-		workflowInstanceRenderPreprocessor;
 
 }
