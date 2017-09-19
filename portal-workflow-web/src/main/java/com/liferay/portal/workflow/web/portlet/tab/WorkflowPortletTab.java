@@ -16,6 +16,12 @@ package com.liferay.portal.workflow.web.portlet.tab;
 
 import aQute.bnd.annotation.ProviderType;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
 /**
  * @author Adam Brandizzi
  */
@@ -27,5 +33,20 @@ public interface WorkflowPortletTab {
 	public String getName();
 
 	public String getViewJSP();
+
+	public default void prepareDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+	}
+
+	public default void prepareProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+	}
+
+	public default void prepareRender(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+	}
 
 }
