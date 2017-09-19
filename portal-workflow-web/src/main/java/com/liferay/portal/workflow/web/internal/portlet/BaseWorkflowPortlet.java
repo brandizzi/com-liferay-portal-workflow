@@ -94,8 +94,8 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 		setPortletTabsRequestAttributes(actionRequest);
 
-		if (isWorkflowDefinitionTabVisible()) {
-			workflowInstanceProcessActionPreprocessor.prepareProcessAction(
+		for (WorkflowPortletTab workflowPortletTab : getWorkflowPortletTabs()) {
+			workflowPortletTab.prepareProcessAction(
 				actionRequest, actionResponse);
 		}
 
@@ -109,19 +109,8 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 		setPortletTabsRequestAttributes(renderRequest);
 
-		if (isWorkflowDefinitionLinkTabVisible()) {
-			workflowDefinitionLinkRenderPreprocessor.prepareRender(
-				renderRequest, renderResponse);
-		}
-
-		if (isWorkflowDefinitionTabVisible()) {
-			workflowDefinitionRenderPreprocessor.prepareRender(
-				renderRequest, renderResponse);
-		}
-
-		if (isWorkflowInstanceTabVisible()) {
-			workflowInstanceRenderPreprocessor.prepareRender(
-				renderRequest, renderResponse);
+		for (WorkflowPortletTab workflowPortletTab : getWorkflowPortletTabs()) {
+			workflowPortletTab.prepareRender(renderRequest, renderResponse);
 		}
 
 		super.render(renderRequest, renderResponse);
@@ -138,8 +127,12 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			include("/instance/error.jsp", renderRequest, renderResponse);
 		}
 		else {
-			workflowInstanceDispatchPreprocessor.prepareDispatch(
-				renderRequest, renderResponse);
+			for (WorkflowPortletTab workflowPortletTab :
+					getWorkflowPortletTabs()) {
+
+				workflowPortletTab.prepareDispatch(
+					renderRequest, renderResponse);
+			}
 
 			super.doDispatch(renderRequest, renderResponse);
 		}
