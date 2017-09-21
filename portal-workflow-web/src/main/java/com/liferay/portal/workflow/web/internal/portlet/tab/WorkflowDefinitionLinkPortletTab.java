@@ -15,11 +15,14 @@
 package com.liferay.portal.workflow.web.internal.portlet.tab;
 
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.display.context.WorkflowDefinitionLinkDisplayContext;
 import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -45,6 +48,27 @@ public class WorkflowDefinitionLinkPortletTab implements WorkflowPortletTab {
 	@Override
 	public String getName() {
 		return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK;
+	}
+
+	@Override
+	public String getSearchJSP() {
+		return "/definition_link/workflow_definition_link_search.jsp";
+	}
+
+	@Override
+	public String getSearchURL(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+		PortletURL searchURL = renderResponse.createRenderURL();
+
+		searchURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		searchURL.setParameter("mvcPath", "/definition_link/view.jsp");
+		searchURL.setParameter("tab", "schemes");
+
+		return searchURL.toString();
 	}
 
 	@Override

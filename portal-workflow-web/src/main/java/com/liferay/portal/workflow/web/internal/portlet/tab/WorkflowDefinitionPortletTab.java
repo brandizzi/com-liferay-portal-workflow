@@ -31,6 +31,7 @@ import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 import java.util.Objects;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -56,6 +57,27 @@ public class WorkflowDefinitionPortletTab implements WorkflowPortletTab {
 	@Override
 	public String getName() {
 		return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION;
+	}
+
+	@Override
+	public String getSearchJSP() {
+		return "/definition/workflow_definition_search.jsp";
+	}
+
+	@Override
+	public String getSearchURL(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+		PortletURL searchURL = renderResponse.createRenderURL();
+
+		searchURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		searchURL.setParameter("mvcPath", "/definition/view.jsp");
+		searchURL.setParameter("tab", "workflows");
+
+		return searchURL.toString();
 	}
 
 	@Override
