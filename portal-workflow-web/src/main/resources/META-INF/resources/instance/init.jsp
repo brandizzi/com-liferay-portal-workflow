@@ -38,7 +38,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowInstance" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowLog" %><%@
 page import="com.liferay.portal.workflow.web.internal.dao.search.WorkflowInstanceResultRowSplitter" %><%@
-page import="com.liferay.portal.workflow.web.internal.display.context.MyWorkflowInstanceDisplayContext" %><%@
 page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowInstanceDisplayContext" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
@@ -52,14 +51,7 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <portlet:defineObjects />
 
 <%
-WorkflowInstanceDisplayContext workflowInstanceDisplayContext = null;
-
-if (portletName.equals(WorkflowPortletKeys.USER_WORKFLOW)) {
-	workflowInstanceDisplayContext = new MyWorkflowInstanceDisplayContext(liferayPortletRequest, liferayPortletResponse);
-}
-else {
-	workflowInstanceDisplayContext = new WorkflowInstanceDisplayContext(liferayPortletRequest, liferayPortletResponse);
-}
+WorkflowInstanceDisplayContext workflowInstanceDisplayContext = (WorkflowInstanceDisplayContext)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_INSTANCE_DISPLAY_CONTEXT);
 %>
 
 <%@ include file="/instance/init-ext.jsp" %>

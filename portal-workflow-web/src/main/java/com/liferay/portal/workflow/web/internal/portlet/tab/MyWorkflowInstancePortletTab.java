@@ -14,7 +14,12 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.tab;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.internal.display.context.MyWorkflowInstanceDisplayContext;
+import com.liferay.portal.workflow.web.internal.display.context.WorkflowInstanceDisplayContext;
 import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,6 +39,16 @@ public class MyWorkflowInstancePortletTab extends WorkflowInstancePortletTab {
 	@Override
 	public String getLabel() {
 		return "my-submissions";
+	}
+
+	@Override
+	protected WorkflowInstanceDisplayContext getWorkflowInstanceDisplayContext(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException {
+
+		return new MyWorkflowInstanceDisplayContext(
+			liferayPortletRequest, liferayPortletResponse);
 	}
 
 }
