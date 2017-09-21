@@ -16,4 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchPage" value="<%= selectedWorkflowPortletTab.getSearchJSP() %>" />
+	<liferay-util:param name="searchURL" value="<%= selectedWorkflowPortletTab.getSearchURL(renderRequest, renderResponse) %>" />
+</liferay-util:include>
+
 <liferay-util:include page="<%= selectedWorkflowPortletTab.getViewJSP() %>" servletContext="<%= application %>" />

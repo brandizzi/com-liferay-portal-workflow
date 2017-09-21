@@ -24,11 +24,6 @@ String displayStyle = workflowInstanceDisplayContext.getDisplayStyle();
 PortletURL portletURL = workflowInstanceDisplayContext.getViewPortletURL();
 %>
 
-<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchPage" value="/instance/workflow_instance_search.jsp" />
-	<liferay-util:param name="searchURL" value="<%= portletURL.toString() %>" />
-</liferay-util:include>
-
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<liferay-util:include page="/instance/toolbar.jsp" servletContext="<%= application %>" />
 </aui:form>
