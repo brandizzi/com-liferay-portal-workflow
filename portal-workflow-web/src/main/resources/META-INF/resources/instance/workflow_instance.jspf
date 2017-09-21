@@ -14,7 +14,7 @@
  */
 --%>
 
-<liferay-ui:search-container searchContainer="<%= workflowInstanceViewDisplayContext.getSearchContainer() %>">
+<liferay-ui:search-container searchContainer="<%= workflowInstanceDisplayContext.getSearchContainer() %>">
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.workflow.WorkflowInstance"
 		cssClass="entry-display-style"
@@ -36,7 +36,7 @@
 			<c:when test='<%= displayStyle.equals("descriptive") %>'>
 				<liferay-ui:search-container-column-icon
 					cssClass="asset-icon"
-					icon="<%= workflowInstanceViewDisplayContext.getAssetIconCssClass(workflowInstance) %>"
+					icon="<%= workflowInstanceDisplayContext.getAssetIconCssClass(workflowInstance) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
@@ -45,7 +45,7 @@
 					<h5 class="text-default">
 
 						<%
-						dateSearchEntry.setDate(workflowInstanceViewDisplayContext.getLastActivityDate(workflowInstance));
+						dateSearchEntry.setDate(workflowInstanceDisplayContext.getLastActivityDate(workflowInstance));
 						%>
 
 						<liferay-ui:message key="last-activity-date" />, <%= dateSearchEntry.getName(request) %>
@@ -53,25 +53,25 @@
 
 					<h4>
 						<aui:a href="<%= rowURL %>">
-							<%= workflowInstanceViewDisplayContext.getAssetTitle(workflowInstance) %>
+							<%= workflowInstanceDisplayContext.getAssetTitle(workflowInstance) %>
 						</aui:a>
 					</h4>
 
 					<h5 class="text-default">
 						<span class="asset-type">
-							<liferay-ui:message key="<%= workflowInstanceViewDisplayContext.getAssetType(workflowInstance) %>" />
+							<liferay-ui:message key="<%= workflowInstanceDisplayContext.getAssetType(workflowInstance) %>" />
 						</span>
 						<span class="status">
-							<liferay-ui:message key="<%= workflowInstanceViewDisplayContext.getStatus(workflowInstance) %>" />
+							<liferay-ui:message key="<%= workflowInstanceDisplayContext.getStatus(workflowInstance) %>" />
 						</span>
 						<span class="definition">
-							<liferay-ui:message key="<%= workflowInstanceViewDisplayContext.getDefinition(workflowInstance) %>" />
+							<liferay-ui:message key="<%= workflowInstanceDisplayContext.getDefinition(workflowInstance) %>" />
 						</span>
 
-						<c:if test="<%= workflowInstanceViewDisplayContext.getEndDate(workflowInstance) != null %>">
+						<c:if test="<%= workflowInstanceDisplayContext.getEndDate(workflowInstance) != null %>">
 
 							<%
-							dateSearchEntry.setDate(workflowInstanceViewDisplayContext.getEndDate(workflowInstance));
+							dateSearchEntry.setDate(workflowInstanceDisplayContext.getEndDate(workflowInstance));
 							%>
 
 							<span class="end-date">
@@ -100,37 +100,37 @@
 					cssClass="asset-title"
 					href="<%= rowURL %>"
 					name="asset-title"
-					value="<%= workflowInstanceViewDisplayContext.getAssetTitle(workflowInstance) %>"
+					value="<%= workflowInstanceDisplayContext.getAssetTitle(workflowInstance) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
 					name="asset-type"
-					value="<%= workflowInstanceViewDisplayContext.getAssetType(workflowInstance) %>"
+					value="<%= workflowInstanceDisplayContext.getAssetType(workflowInstance) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
 					name="status"
-					value="<%= workflowInstanceViewDisplayContext.getStatus(workflowInstance) %>"
+					value="<%= workflowInstanceDisplayContext.getStatus(workflowInstance) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
 					name="definition"
-					value="<%= workflowInstanceViewDisplayContext.getDefinition(workflowInstance) %>"
+					value="<%= workflowInstanceDisplayContext.getDefinition(workflowInstance) %>"
 				/>
 
 				<liferay-ui:search-container-column-date
 					href="<%= rowURL %>"
 					name="last-activity-date"
-					value="<%= workflowInstanceViewDisplayContext.getLastActivityDate(workflowInstance) %>"
+					value="<%= workflowInstanceDisplayContext.getLastActivityDate(workflowInstance) %>"
 				/>
 
 				<liferay-ui:search-container-column-date
 					href="<%= rowURL %>"
 					name="end-date"
-					value="<%= workflowInstanceViewDisplayContext.getEndDate(workflowInstance) %>"
+					value="<%= workflowInstanceDisplayContext.getEndDate(workflowInstance) %>"
 				/>
 
 				<c:choose>
@@ -150,5 +150,5 @@
 		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new WorkflowInstanceResultRowSplitter() %>" searchContainer="<%= workflowInstanceViewDisplayContext.getSearchContainer() %>" />
+	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new WorkflowInstanceResultRowSplitter() %>" searchContainer="<%= workflowInstanceDisplayContext.getSearchContainer() %>" />
 </liferay-ui:search-container>

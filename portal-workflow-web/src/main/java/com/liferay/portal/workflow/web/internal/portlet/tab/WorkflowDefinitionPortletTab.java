@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.request.prepocessor;
+package com.liferay.portal.workflow.web.internal.portlet.tab;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -24,10 +25,13 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.display.context.WorkflowDefinitionDisplayContext;
+import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowPreprocessorHelper;
+import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import java.util.Objects;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -37,9 +41,49 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(service = WorkflowDefinitionRenderPreprocessor.class)
-public class WorkflowDefinitionRenderPreprocessor
-	implements WorkflowRenderPreprocessor {
+@Component(
+	property = {
+		"com.liferay.portal.workflow.web.portlet.tab.name=" +
+			WorkflowWebKeys.WORKFLOW_TAB_DEFINITION
+	}
+)
+public class WorkflowDefinitionPortletTab implements WorkflowPortletTab {
+
+	@Override
+	public String getLabel() {
+		return "workflows";
+	}
+
+	@Override
+	public String getName() {
+		return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION;
+	}
+
+	@Override
+	public String getSearchJSP() {
+		return "/definition/workflow_definition_search.jsp";
+	}
+
+	@Override
+	public String getSearchURL(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+		PortletURL searchURL = renderResponse.createRenderURL();
+
+		searchURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		searchURL.setParameter("mvcPath", "/definition/view.jsp");
+		searchURL.setParameter("tab", "workflows");
+
+		return searchURL.toString();
+	}
+
+	@Override
+	public String getViewJSP() {
+		return "/definition/view.jsp";
+	}
 
 	@Override
 	public void prepareRender(
@@ -47,11 +91,12 @@ public class WorkflowDefinitionRenderPreprocessor
 		throws PortletException {
 
 		try {
-			String path = _workflowPreprocessorHelper.getPath(
+			String path = workflowPreprocessorHelper.getPath(
 				renderRequest, renderResponse);
 
 			WorkflowDefinitionDisplayContext displayContext =
-				new WorkflowDefinitionDisplayContext(renderRequest);
+				new WorkflowDefinitionDisplayContext(
+					renderRequest, userLocalService);
 
 			renderRequest.setAttribute(
 				WorkflowWebKeys.WORKFLOW_DEFINITION_DISPLAY_CONTEXT,
@@ -66,8 +111,8 @@ public class WorkflowDefinitionRenderPreprocessor
 			}
 		}
 		catch (Exception e) {
-			if (_workflowPreprocessorHelper.isSessionErrorException(e)) {
-				_workflowPreprocessorHelper.hideDefaultErrorMessage(
+			if (workflowPreprocessorHelper.isSessionErrorException(e)) {
+				workflowPreprocessorHelper.hideDefaultErrorMessage(
 					renderRequest);
 
 				SessionErrors.add(renderRequest, e.getClass());
@@ -101,6 +146,9 @@ public class WorkflowDefinitionRenderPreprocessor
 	}
 
 	@Reference
-	private WorkflowPreprocessorHelper _workflowPreprocessorHelper;
+	protected UserLocalService userLocalService;
+
+	@Reference
+	protected WorkflowPreprocessorHelper workflowPreprocessorHelper;
 
 }

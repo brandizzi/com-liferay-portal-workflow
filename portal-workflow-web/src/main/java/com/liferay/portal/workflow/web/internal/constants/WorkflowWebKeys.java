@@ -19,13 +19,19 @@ package com.liferay.portal.workflow.web.internal.constants;
  */
 public class WorkflowWebKeys {
 
-	public static final String WORKFLOW_DEFAULT_TAB = "WORKFLOW_DEFAULT_TAB";
-
 	public static final String WORKFLOW_DEFINITION_DISPLAY_CONTEXT =
 		"WORKFLOW_DEFINITION_DISPLAY_CONTEXT";
 
 	public static final String WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT =
 		"WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT";
+
+	public static final String WORKFLOW_INSTANCE_DISPLAY_CONTEXT =
+		"WORKFLOW_INSTANCE_DISPLAY_CONTEXT";
+
+	public static final String WORKFLOW_PORTLET_TABS = "WORKFLOW_PORTLET_TABS";
+
+	public static final String WORKFLOW_SELECTED_WORKFLOW_PORTLET_TAB =
+		"SELECTED_WORFLOW_PORTLET_TAB";
 
 	public static final String WORKFLOW_TAB_DEFINITION = "workflows";
 
@@ -33,13 +39,6 @@ public class WorkflowWebKeys {
 
 	public static final String WORKFLOW_TAB_INSTANCE = "monitoring";
 
-	public static final String WORKFLOW_VISIBILITY_DEFINITION =
-		"WORKFLOW_VISIBILITY_DEFINITION";
-
-	public static final String WORKFLOW_VISIBILITY_DEFINITION_LINK =
-		"WORKFLOW_VISIBILITY_DEFINITION_LINK";
-
-	public static final String WORKFLOW_VISIBILITY_INSTANCE =
-		"WORKFLOW_VISIBILITY_INSTANCE";
+	public static final String WORKFLOW_TAB_MY_SUBMISSIONS = "my-submissions";
 
 }
