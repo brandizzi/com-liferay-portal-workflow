@@ -19,9 +19,9 @@
 <%
 DateSearchEntry dateSearchEntry = new DateSearchEntry();
 
-String displayStyle = workflowInstanceViewDisplayContext.getDisplayStyle();
+String displayStyle = workflowInstanceDisplayContext.getDisplayStyle();
 
-PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
+PortletURL portletURL = workflowInstanceDisplayContext.getViewPortletURL();
 %>
 
 <liferay-util:include page="/navigation.jsp" servletContext="<%= application %>">

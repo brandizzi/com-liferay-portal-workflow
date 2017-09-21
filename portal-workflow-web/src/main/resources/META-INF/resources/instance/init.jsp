@@ -39,9 +39,9 @@ page import="com.liferay.portal.kernel.workflow.WorkflowInstance" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowLog" %><%@
 page import="com.liferay.portal.workflow.web.internal.dao.search.WorkflowInstanceResultRowSplitter" %><%@
 page import="com.liferay.portal.workflow.web.internal.display.context.MyWorkflowInstanceEditDisplayContext" %><%@
-page import="com.liferay.portal.workflow.web.internal.display.context.MyWorkflowInstanceViewDisplayContext" %><%@
 page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowInstanceEditDisplayContext" %><%@
-page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowInstanceViewDisplayContext" %><%@
+page import="com.liferay.portal.workflow.web.internal.display.context.MyWorkflowInstanceDisplayContext" %><%@
+page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowInstanceDisplayContext" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
@@ -54,13 +54,13 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <portlet:defineObjects />
 
 <%
-WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = null;
+WorkflowInstanceDisplayContext workflowInstanceDisplayContext = null;
 
 if (portletName.equals(WorkflowPortletKeys.USER_WORKFLOW)) {
-	workflowInstanceViewDisplayContext = new MyWorkflowInstanceViewDisplayContext(liferayPortletRequest, liferayPortletResponse);
+	workflowInstanceDisplayContext = new MyWorkflowInstanceDisplayContext(liferayPortletRequest, liferayPortletResponse);
 }
 else {
-	workflowInstanceViewDisplayContext = new WorkflowInstanceViewDisplayContext(liferayPortletRequest, liferayPortletResponse);
+	workflowInstanceDisplayContext = new WorkflowInstanceDisplayContext(liferayPortletRequest, liferayPortletResponse);
 }
 %>
 
