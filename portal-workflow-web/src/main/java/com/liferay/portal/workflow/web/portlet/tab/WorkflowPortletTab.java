@@ -32,6 +32,11 @@ public interface WorkflowPortletTab {
 
 	public String getName();
 
+	public String getSearchJSP();
+
+	public String getSearchURL(
+		RenderRequest renderRequest, RenderResponse renderResponse);
+
 	public String getViewJSP();
 
 	public default void prepareDispatch(
