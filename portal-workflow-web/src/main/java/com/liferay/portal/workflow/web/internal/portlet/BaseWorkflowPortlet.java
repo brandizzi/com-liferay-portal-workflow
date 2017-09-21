@@ -18,13 +18,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowDefinitionLinkRenderPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowDefinitionRenderPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceDispatchPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceProcessActionPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceRenderPreprocessor;
+import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import java.io.IOException;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -33,40 +31,28 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Adam Brandizzi
  */
 public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
-	public String getDefaultTab() {
-		if (isWorkflowDefinitionTabVisible()) {
-			return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION;
-		}
+	public WorkflowPortletTab getDefaultWorkflowPortletTab() {
+		List<WorkflowPortletTab> workflowPortletTabs = getWorkflowPortletTabs();
 
-		if (isWorkflowDefinitionLinkTabVisible()) {
-			return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK;
-		}
-
-		return WorkflowWebKeys.WORKFLOW_TAB_INSTANCE;
+		return workflowPortletTabs.get(0);
 	}
 
-	public abstract boolean isWorkflowDefinitionLinkTabVisible();
-
-	public abstract boolean isWorkflowDefinitionTabVisible();
-
-	public abstract boolean isWorkflowInstanceTabVisible();
+	public abstract List<WorkflowPortletTab> getWorkflowPortletTabs();
 
 	@Override
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		setWorkflowTabsVisibilityPortletRequestAttribute(actionRequest);
+		setPortletTabsRequestAttributes(actionRequest);
 
-		if (isWorkflowDefinitionTabVisible()) {
-			workflowInstanceProcessActionPreprocessor.prepareProcessAction(
+		for (WorkflowPortletTab workflowPortletTab : getWorkflowPortletTabs()) {
+			workflowPortletTab.prepareProcessAction(
 				actionRequest, actionResponse);
 		}
 
@@ -78,21 +64,10 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		setWorkflowTabsVisibilityPortletRequestAttribute(renderRequest);
+		setPortletTabsRequestAttributes(renderRequest);
 
-		if (isWorkflowDefinitionLinkTabVisible()) {
-			workflowDefinitionLinkRenderPreprocessor.prepareRender(
-				renderRequest, renderResponse);
-		}
-
-		if (isWorkflowDefinitionTabVisible()) {
-			workflowDefinitionRenderPreprocessor.prepareRender(
-				renderRequest, renderResponse);
-		}
-
-		if (isWorkflowInstanceTabVisible()) {
-			workflowInstanceRenderPreprocessor.prepareRender(
-				renderRequest, renderResponse);
+		for (WorkflowPortletTab workflowPortletTab : getWorkflowPortletTabs()) {
+			workflowPortletTab.prepareRender(renderRequest, renderResponse);
 		}
 
 		super.render(renderRequest, renderResponse);
@@ -109,47 +84,41 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			include("/instance/error.jsp", renderRequest, renderResponse);
 		}
 		else {
-			workflowInstanceDispatchPreprocessor.prepareDispatch(
-				renderRequest, renderResponse);
+			for (WorkflowPortletTab workflowPortletTab :
+					getWorkflowPortletTabs()) {
+
+				workflowPortletTab.prepareDispatch(
+					renderRequest, renderResponse);
+			}
 
 			super.doDispatch(renderRequest, renderResponse);
 		}
 	}
 
-	protected void setWorkflowTabsVisibilityPortletRequestAttribute(
+	protected WorkflowPortletTab getSelectedWorkflowPortletTab(
+		PortletRequest portletRequest) {
+
+		String tab = portletRequest.getParameter("tab");
+
+		List<WorkflowPortletTab> workflowPortletTabs = getWorkflowPortletTabs();
+
+		for (WorkflowPortletTab workflowPortletTab : workflowPortletTabs) {
+			if (workflowPortletTab.getName().equals(tab)) {
+				return workflowPortletTab;
+			}
+		}
+
+		return getDefaultWorkflowPortletTab();
+	}
+
+	protected void setPortletTabsRequestAttributes(
 		PortletRequest portletRequest) {
 
 		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());
+			WorkflowWebKeys.WORKFLOW_SELECTED_WORKFLOW_PORTLET_TAB,
+			getSelectedWorkflowPortletTab(portletRequest));
 		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_VISIBILITY_DEFINITION,
-			isWorkflowDefinitionTabVisible());
-		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_VISIBILITY_DEFINITION_LINK,
-			isWorkflowDefinitionLinkTabVisible());
-		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_VISIBILITY_INSTANCE,
-			isWorkflowInstanceTabVisible());
+			WorkflowWebKeys.WORKFLOW_PORTLET_TABS, getWorkflowPortletTabs());
 	}
-
-	@Reference(unbind = "-")
-	protected WorkflowDefinitionLinkRenderPreprocessor
-		workflowDefinitionLinkRenderPreprocessor;
-
-	@Reference(unbind = "-")
-	protected WorkflowDefinitionRenderPreprocessor
-		workflowDefinitionRenderPreprocessor;
-
-	@Reference(unbind = "-")
-	protected WorkflowInstanceDispatchPreprocessor
-		workflowInstanceDispatchPreprocessor;
-
-	@Reference(unbind = "-")
-	protected WorkflowInstanceProcessActionPreprocessor
-		workflowInstanceProcessActionPreprocessor;
-
-	@Reference(unbind = "-")
-	protected WorkflowInstanceRenderPreprocessor
-		workflowInstanceRenderPreprocessor;
 
 }

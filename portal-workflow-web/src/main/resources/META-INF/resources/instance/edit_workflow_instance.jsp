@@ -19,19 +19,10 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = null;
-
-if (portletName.equals(WorkflowPortletKeys.USER_WORKFLOW)) {
-	workflowInstanceEditDisplayContext = new MyWorkflowInstanceEditDisplayContext(liferayPortletRequest, liferayPortletResponse);
-}
-else {
-	workflowInstanceEditDisplayContext = new WorkflowInstanceEditDisplayContext(liferayPortletRequest, liferayPortletResponse);
-}
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
+renderResponse.setTitle(workflowInstanceDisplayContext.getEditHeaderTitle());
 %>
 
 <div class="container-fluid-1280">
@@ -48,7 +39,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 				<aui:col width="<%= 60 %>">
 					<aui:field-wrapper label="state">
 						<aui:fieldset>
-							<%= workflowInstanceEditDisplayContext.getWorkflowInstanceState() %>
+							<%= workflowInstanceDisplayContext.getWorkflowInstanceState() %>
 						</aui:fieldset>
 					</aui:field-wrapper>
 				</aui:col>
@@ -56,7 +47,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 				<aui:col width="<%= 33 %>">
 					<aui:field-wrapper label="end-date">
 						<aui:fieldset>
-							<%= workflowInstanceEditDisplayContext.getWorkflowInstanceEndDate() %>
+							<%= workflowInstanceDisplayContext.getWorkflowInstanceEndDate() %>
 						</aui:fieldset>
 					</aui:field-wrapper>
 				</aui:col>
@@ -65,13 +56,13 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 			<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= false %>" id="preview">
 
 				<%
-				AssetRenderer<?> assetRenderer = workflowInstanceEditDisplayContext.getAssetRenderer();
+				AssetRenderer<?> assetRenderer = workflowInstanceDisplayContext.getAssetRenderer();
 
-				AssetEntry assetEntry = workflowInstanceEditDisplayContext.getAssetEntry();
+				AssetEntry assetEntry = workflowInstanceDisplayContext.getAssetEntry();
 				%>
 
 				<c:if test="<%= assetRenderer != null %>">
-					<liferay-ui:panel extended="<%= true %>" markupView="lexicon" title="<%= workflowInstanceEditDisplayContext.getPanelTitle() %>">
+					<liferay-ui:panel extended="<%= true %>" markupView="lexicon" title="<%= workflowInstanceDisplayContext.getPanelTitle() %>">
 						<div class="task-content-actions">
 							<liferay-ui:icon-list>
 								<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
@@ -81,10 +72,10 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 
 										<c:if test="<%= assetEntry != null %>">
 											<portlet:param name="assetEntryId" value="<%= String.valueOf(assetEntry.getEntryId()) %>" />
-											<portlet:param name="assetEntryVersionId" value="<%= workflowInstanceEditDisplayContext.getAssetEntryVersionId() %>" />
+											<portlet:param name="assetEntryVersionId" value="<%= workflowInstanceDisplayContext.getAssetEntryVersionId() %>" />
 										</c:if>
 
-										<portlet:param name="type" value="<%= workflowInstanceEditDisplayContext.getAssetRendererFactory().getType() %>" />
+										<portlet:param name="type" value="<%= workflowInstanceDisplayContext.getAssetRendererFactory().getType() %>" />
 										<portlet:param name="showEditURL" value="<%= Boolean.FALSE.toString() %>" />
 									</portlet:renderURL>
 
@@ -99,10 +90,10 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 
 						<h3 class="task-content-title">
 							<liferay-ui:icon
-								icon="<%= workflowInstanceEditDisplayContext.getIconCssClass() %>"
+								icon="<%= workflowInstanceDisplayContext.getIconCssClass() %>"
 								label="<%= true %>"
 								markupView="lexicon"
-								message="<%= workflowInstanceEditDisplayContext.getTaskContentTitleMessage() %>"
+								message="<%= workflowInstanceDisplayContext.getTaskContentTitleMessage() %>"
 							/>
 						</h3>
 
@@ -124,14 +115,14 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 					</liferay-ui:panel>
 				</c:if>
 
-				<c:if test="<%= !workflowInstanceEditDisplayContext.isWorkflowTasksEmpty() %>">
+				<c:if test="<%= !workflowInstanceDisplayContext.isWorkflowTasksEmpty() %>">
 					<liferay-ui:panel extended="<%= false %>" markupView="lexicon" title="tasks">
 						<liferay-ui:search-container
 							emptyResultsMessage="there-are-no-tasks"
 							iteratorURL="<%= renderResponse.createRenderURL() %>"
 						>
 							<liferay-ui:search-container-results
-								results="<%= workflowInstanceEditDisplayContext.getWorkflowTasks() %>"
+								results="<%= workflowInstanceDisplayContext.getWorkflowTasks() %>"
 							/>
 
 							<liferay-ui:search-container-row
@@ -148,18 +139,18 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 									name="task"
 								>
 									<span class="task-name" id="<%= workflowTask.getWorkflowTaskId() %>">
-										<liferay-ui:message key="<%= workflowInstanceEditDisplayContext.getTaskName(workflowTask) %>" />
+										<liferay-ui:message key="<%= workflowInstanceDisplayContext.getTaskName(workflowTask) %>" />
 									</span>
 								</liferay-ui:search-container-column-text>
 
 								<liferay-ui:search-container-column-text
 									name="due-date"
-									value="<%= workflowInstanceEditDisplayContext.getTaskDueDate(workflowTask) %>"
+									value="<%= workflowInstanceDisplayContext.getTaskDueDate(workflowTask) %>"
 								/>
 
 								<liferay-ui:search-container-column-text
 									name="completed"
-									value="<%= workflowInstanceEditDisplayContext.getTaskCompleted(workflowTask) %>"
+									value="<%= workflowInstanceDisplayContext.getTaskCompleted(workflowTask) %>"
 								/>
 							</liferay-ui:search-container-row>
 

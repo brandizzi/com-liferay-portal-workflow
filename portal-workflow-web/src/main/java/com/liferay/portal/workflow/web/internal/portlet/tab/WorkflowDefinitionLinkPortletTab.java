@@ -12,13 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.request.prepocessor;
+package com.liferay.portal.workflow.web.internal.portlet.tab;
 
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.display.context.WorkflowDefinitionLinkDisplayContext;
+import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -28,9 +32,49 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(service = WorkflowDefinitionLinkRenderPreprocessor.class)
-public class WorkflowDefinitionLinkRenderPreprocessor
-	implements WorkflowRenderPreprocessor {
+@Component(
+	property = {
+		"com.liferay.portal.workflow.web.portlet.tab.name=" +
+			WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK
+	}
+)
+public class WorkflowDefinitionLinkPortletTab implements WorkflowPortletTab {
+
+	@Override
+	public String getLabel() {
+		return "schemes";
+	}
+
+	@Override
+	public String getName() {
+		return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK;
+	}
+
+	@Override
+	public String getSearchJSP() {
+		return "/definition_link/workflow_definition_link_search.jsp";
+	}
+
+	@Override
+	public String getSearchURL(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+		PortletURL searchURL = renderResponse.createRenderURL();
+
+		searchURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		searchURL.setParameter("mvcPath", "/definition_link/view.jsp");
+		searchURL.setParameter("tab", "schemes");
+
+		return searchURL.toString();
+	}
+
+	@Override
+	public String getViewJSP() {
+		return "/definition_link/view.jsp";
+	}
 
 	@Override
 	public void prepareRender(
@@ -40,7 +84,7 @@ public class WorkflowDefinitionLinkRenderPreprocessor
 		WorkflowDefinitionLinkDisplayContext displayContext =
 			new WorkflowDefinitionLinkDisplayContext(
 				renderRequest, renderResponse,
-				_workflowDefinitionLinkLocalService);
+				workflowDefinitionLinkLocalService);
 
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT,
@@ -48,7 +92,7 @@ public class WorkflowDefinitionLinkRenderPreprocessor
 	}
 
 	@Reference(unbind = "-")
-	private WorkflowDefinitionLinkLocalService
-		_workflowDefinitionLinkLocalService;
+	protected WorkflowDefinitionLinkLocalService
+		workflowDefinitionLinkLocalService;
 
 }

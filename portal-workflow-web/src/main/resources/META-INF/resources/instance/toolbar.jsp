@@ -20,11 +20,11 @@
 	includeCheckBox="<%= false %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= !workflowInstanceViewDisplayContext.isSearch() %>">
+		<c:if test="<%= !workflowInstanceDisplayContext.isSearch() %>">
 			<liferay-frontend:management-bar-display-buttons
-				displayViews="<%= workflowInstanceViewDisplayContext.getDisplayViews() %>"
-				portletURL="<%= workflowInstanceViewDisplayContext.getViewPortletURL() %>"
-				selectedDisplayStyle="<%= workflowInstanceViewDisplayContext.getDisplayStyle() %>"
+				displayViews="<%= workflowInstanceDisplayContext.getDisplayViews() %>"
+				portletURL="<%= workflowInstanceDisplayContext.getViewPortletURL() %>"
+				selectedDisplayStyle="<%= workflowInstanceDisplayContext.getDisplayStyle() %>"
 			/>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
@@ -34,14 +34,14 @@
 
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all", "pending", "completed"} %>'
-			portletURL="<%= workflowInstanceViewDisplayContext.getViewPortletURL() %>"
+			portletURL="<%= workflowInstanceDisplayContext.getViewPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= workflowInstanceViewDisplayContext.getOrderByCol() %>"
-			orderByType="<%= workflowInstanceViewDisplayContext.getOrderByType() %>"
+			orderByCol="<%= workflowInstanceDisplayContext.getOrderByCol() %>"
+			orderByType="<%= workflowInstanceDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"last-activity-date", "end-date"} %>'
-			portletURL="<%= workflowInstanceViewDisplayContext.getViewPortletURL() %>"
+			portletURL="<%= workflowInstanceDisplayContext.getViewPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>

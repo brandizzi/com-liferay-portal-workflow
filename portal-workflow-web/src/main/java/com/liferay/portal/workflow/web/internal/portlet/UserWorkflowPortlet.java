@@ -15,10 +15,16 @@
 package com.liferay.portal.workflow.web.internal.portlet;
 
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
@@ -50,18 +56,14 @@ import org.osgi.service.component.annotations.Component;
 public class UserWorkflowPortlet extends BaseWorkflowPortlet {
 
 	@Override
-	public boolean isWorkflowDefinitionLinkTabVisible() {
-		return false;
+	public List<WorkflowPortletTab> getWorkflowPortletTabs() {
+		return Arrays.asList(_myWorkflowInstancePortletTab);
 	}
 
-	@Override
-	public boolean isWorkflowDefinitionTabVisible() {
-		return false;
-	}
-
-	@Override
-	public boolean isWorkflowInstanceTabVisible() {
-		return true;
-	}
+	@Reference(
+		target = "(com.liferay.portal.workflow.web.portlet.tab.name=" + WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS + ")",
+		unbind = "-"
+	)
+	private WorkflowPortletTab _myWorkflowInstancePortletTab;
 
 }
