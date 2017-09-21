@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.web.internal.display.context;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -22,6 +23,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.web.internal.search.WorkflowInstanceSearch;
 
 import java.util.List;
@@ -29,10 +32,10 @@ import java.util.List;
 /**
  * @author Marcellus Tavares
  */
-public class MyWorkflowInstanceViewDisplayContext
-	extends WorkflowInstanceViewDisplayContext {
+public class MyWorkflowInstanceDisplayContext
+	extends WorkflowInstanceDisplayContext {
 
-	public MyWorkflowInstanceViewDisplayContext(
+	public MyWorkflowInstanceDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
@@ -43,6 +46,20 @@ public class MyWorkflowInstanceViewDisplayContext
 	@Override
 	public String getHeaderTitle() {
 		return "my-submissions";
+	}
+
+	@Override
+	public List<WorkflowTask> getWorkflowTasks() throws PortalException {
+		if (workflowTasks == null) {
+			workflowTasks =
+				WorkflowTaskManagerUtil.getWorkflowTasksByWorkflowInstance(
+					workflowInstanceRequestHelper.getCompanyId(),
+					workflowInstanceRequestHelper.getUserId(),
+					getWorkflowInstanceId(), false, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+		}
+
+		return workflowTasks;
 	}
 
 	@Override
