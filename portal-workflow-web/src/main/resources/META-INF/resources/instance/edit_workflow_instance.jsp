@@ -31,7 +31,7 @@ else {
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(workflowInstanceDisplayContext.getHeaderTitle());
+renderResponse.setTitle(workflowInstanceDisplayContext.getEditHeaderTitle());
 %>
 
 <div class="container-fluid-1280">
