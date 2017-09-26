@@ -16,7 +16,6 @@ package com.liferay.portal.workflow.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
@@ -25,6 +24,7 @@ import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowDefi
 import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceDispatchPreprocessor;
 import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceProcessActionPreprocessor;
 import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceRenderPreprocessor;
+import com.liferay.portal.workflow.web.internal.servlet.taglib.WorkflowDynamicInclude;
 
 import java.io.IOException;
 
@@ -149,11 +149,10 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(portal.workflow.tabs.name=*)"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setDynamicInclude(
-		DynamicInclude dynamicInclude, Map<String, Object> properties) {
+		WorkflowDynamicInclude dynamicInclude, Map<String, Object> properties) {
 
 		String tabsName = MapUtil.getString(
 			properties, "portal.workflow.tabs.name");
@@ -162,7 +161,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 	}
 
 	protected void unsetDynamicInclude(
-		DynamicInclude dynamicInclude, Map<String, Object> properties) {
+		WorkflowDynamicInclude dynamicInclude, Map<String, Object> properties) {
 
 		String tabsName = MapUtil.getString(
 			properties, "portal.workflow.tabs.name");
@@ -190,7 +189,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 	protected WorkflowInstanceRenderPreprocessor
 		workflowInstanceRenderPreprocessor;
 
-	private final Map<String, DynamicInclude> _dynamicIncludes =
+	private final Map<String, WorkflowDynamicInclude> _dynamicIncludes =
 		new ConcurrentHashMap<>();
 
 }

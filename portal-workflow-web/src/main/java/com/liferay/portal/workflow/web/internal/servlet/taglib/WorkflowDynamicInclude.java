@@ -15,18 +15,9 @@
 package com.liferay.portal.workflow.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Adam Brandizzi
  */
-@Component(
-	immediate = true,
-	property = {"portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS},
-	service = {DynamicInclude.class, WorkflowDynamicInclude.class}
-)
-public class MyWorkflowInstanceDynamicInclude
-	extends WorkflowInstanceDynamicInclude {
+public interface WorkflowDynamicInclude extends DynamicInclude {
 }
