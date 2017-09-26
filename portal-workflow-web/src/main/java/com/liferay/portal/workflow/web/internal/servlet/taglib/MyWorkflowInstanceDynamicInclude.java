@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.portal.workflow.web.internal.servlet.taglib;
 
-<%
-DynamicInclude dynamicInclude = dynamicIncludes.get(tab);
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
 
-dynamicInclude.include(request, PipingServletResponse.createPipingServletResponse(pageContext), null);
-%>
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Adam Brandizzi
+ */
+@Component(
+	immediate = true,
+	property = {"portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS},
+	service = DynamicInclude.class
+)
+public class MyWorkflowInstanceDynamicInclude
+	extends WorkflowInstanceDynamicInclude {
+}

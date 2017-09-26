@@ -15,6 +15,10 @@
 package com.liferay.portal.workflow.web.internal.portlet;
 
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.portlet.Portlet;
 
@@ -50,18 +54,11 @@ import org.osgi.service.component.annotations.Component;
 public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 
 	@Override
-	public boolean isWorkflowDefinitionLinkTabVisible() {
-		return true;
-	}
-
-	@Override
-	public boolean isWorkflowDefinitionTabVisible() {
-		return true;
-	}
-
-	@Override
-	public boolean isWorkflowInstanceTabVisible() {
-		return true;
+	public List<String> getWorkflowTabNames() {
+		return Arrays.asList(
+			WorkflowWebKeys.WORKFLOW_TAB_DEFINITION,
+			WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK,
+			WorkflowWebKeys.WORKFLOW_TAB_INSTANCE);
 	}
 
 }

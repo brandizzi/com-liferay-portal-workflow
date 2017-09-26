@@ -16,6 +16,8 @@ package com.liferay.portal.workflow.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowDefinitionLinkRenderPreprocessor;
@@ -26,14 +28,20 @@ import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInst
 
 import java.io.IOException;
 
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adam Brandizzi
@@ -41,29 +49,44 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 	public String getDefaultTab() {
-		if (isWorkflowDefinitionTabVisible()) {
-			return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION;
-		}
+		List<String> tabNames = getWorkflowTabNames();
 
-		if (isWorkflowDefinitionLinkTabVisible()) {
-			return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK;
-		}
-
-		return WorkflowWebKeys.WORKFLOW_TAB_INSTANCE;
+		return tabNames.get(0);
 	}
 
-	public abstract boolean isWorkflowDefinitionLinkTabVisible();
+	public abstract List<String> getWorkflowTabNames();
 
-	public abstract boolean isWorkflowDefinitionTabVisible();
+	public boolean isWorkflowDefinitionLinkTabVisible() {
+		List<String> tabNames = getWorkflowTabNames();
 
-	public abstract boolean isWorkflowInstanceTabVisible();
+		return tabNames.contains(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK);
+	}
+
+	public boolean isWorkflowDefinitionTabVisible() {
+		List<String> tabNames = getWorkflowTabNames();
+
+		return tabNames.contains(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION);
+	}
+
+	public boolean isWorkflowInstanceTabVisible() {
+		List<String> tabNames = getWorkflowTabNames();
+
+		if (tabNames.contains(WorkflowWebKeys.WORKFLOW_TAB_INSTANCE) ||
+			tabNames.contains(WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS)) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 	@Override
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		setWorkflowTabsVisibilityPortletRequestAttribute(actionRequest);
+		actionRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());
 
 		if (isWorkflowDefinitionTabVisible()) {
 			workflowInstanceProcessActionPreprocessor.prepareProcessAction(
@@ -78,7 +101,14 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		setWorkflowTabsVisibilityPortletRequestAttribute(renderRequest);
+		renderRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_TAB_DYNAMIC_INCLUDES, _dynamicIncludes);
+
+		renderRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_TAB_NAMES, getWorkflowTabNames());
+
+		renderRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());
 
 		if (isWorkflowDefinitionLinkTabVisible()) {
 			workflowDefinitionLinkRenderPreprocessor.prepareRender(
@@ -116,20 +146,28 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void setWorkflowTabsVisibilityPortletRequestAttribute(
-		PortletRequest portletRequest) {
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(portal.workflow.tabs.name=*)"
+	)
+	protected void setDynamicInclude(
+		DynamicInclude dynamicInclude, Map<String, Object> properties) {
 
-		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());
-		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_VISIBILITY_DEFINITION,
-			isWorkflowDefinitionTabVisible());
-		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_VISIBILITY_DEFINITION_LINK,
-			isWorkflowDefinitionLinkTabVisible());
-		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_VISIBILITY_INSTANCE,
-			isWorkflowInstanceTabVisible());
+		String tabsName = MapUtil.getString(
+			properties, "portal.workflow.tabs.name");
+
+		_dynamicIncludes.put(tabsName, dynamicInclude);
+	}
+
+	protected void unsetDynamicInclude(
+		DynamicInclude dynamicInclude, Map<String, Object> properties) {
+
+		String tabsName = MapUtil.getString(
+			properties, "portal.workflow.tabs.name");
+
+		_dynamicIncludes.remove(tabsName);
 	}
 
 	@Reference(unbind = "-")
@@ -151,5 +189,8 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected WorkflowInstanceRenderPreprocessor
 		workflowInstanceRenderPreprocessor;
+
+	private final Map<String, DynamicInclude> _dynamicIncludes =
+		new ConcurrentHashMap<>();
 
 }

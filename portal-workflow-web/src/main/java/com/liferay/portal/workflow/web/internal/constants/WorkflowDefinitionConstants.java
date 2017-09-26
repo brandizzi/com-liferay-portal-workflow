@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.portal.workflow.web.internal.constants;
 
-<%
-DynamicInclude dynamicInclude = dynamicIncludes.get(tab);
+/**
+ * @author Adam Brandizzi
+ */
+public class WorkflowDefinitionConstants {
 
-dynamicInclude.include(request, PipingServletResponse.createPipingServletResponse(pageContext), null);
-%>
+	public static final int STATUS_ALL = 0;
+
+	public static final int STATUS_NOT_PUBLISHED = 1;
+
+	public static final int STATUS_PUBLISHED = 2;
+
+}
