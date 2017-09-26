@@ -61,6 +61,8 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		return WorkflowWebKeys.WORKFLOW_TAB_INSTANCE;
 	}
 
+	public abstract List<String> getWorkflowTabNames();
+
 	public abstract boolean isWorkflowDefinitionLinkTabVisible();
 
 	public abstract boolean isWorkflowDefinitionTabVisible();
