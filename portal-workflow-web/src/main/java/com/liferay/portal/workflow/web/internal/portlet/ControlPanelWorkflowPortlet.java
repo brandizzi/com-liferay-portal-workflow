@@ -61,19 +61,4 @@ public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 			WorkflowWebKeys.WORKFLOW_TAB_INSTANCE);
 	}
 
-	@Override
-	public boolean isWorkflowDefinitionLinkTabVisible() {
-		return true;
-	}
-
-	@Override
-	public boolean isWorkflowDefinitionTabVisible() {
-		return true;
-	}
-
-	@Override
-	public boolean isWorkflowInstanceTabVisible() {
-		return true;
-	}
-
 }
