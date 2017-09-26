@@ -88,9 +88,11 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		actionRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());
 
-		if (isWorkflowDefinitionTabVisible()) {
-			workflowInstanceProcessActionPreprocessor.prepareProcessAction(
-				actionRequest, actionResponse);
+		for (String tabName : getWorkflowTabNames()) {
+			WorkflowDynamicInclude dynamicInclude = _dynamicIncludes.get(
+				tabName);
+
+			dynamicInclude.prepareProcessAction(actionRequest, actionResponse);
 		}
 
 		super.processAction(actionRequest, actionResponse);
@@ -110,19 +112,11 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());
 
-		if (isWorkflowDefinitionLinkTabVisible()) {
-			workflowDefinitionLinkRenderPreprocessor.prepareRender(
-				renderRequest, renderResponse);
-		}
+		for (String tabName : getWorkflowTabNames()) {
+			WorkflowDynamicInclude dynamicInclude = _dynamicIncludes.get(
+				tabName);
 
-		if (isWorkflowDefinitionTabVisible()) {
-			workflowDefinitionRenderPreprocessor.prepareRender(
-				renderRequest, renderResponse);
-		}
-
-		if (isWorkflowInstanceTabVisible()) {
-			workflowInstanceRenderPreprocessor.prepareRender(
-				renderRequest, renderResponse);
+			dynamicInclude.prepareRender(renderRequest, renderResponse);
 		}
 
 		super.render(renderRequest, renderResponse);
@@ -139,8 +133,12 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			include("/instance/error.jsp", renderRequest, renderResponse);
 		}
 		else {
-			workflowInstanceDispatchPreprocessor.prepareDispatch(
-				renderRequest, renderResponse);
+			for (String tabName : getWorkflowTabNames()) {
+				WorkflowDynamicInclude dynamicInclude = _dynamicIncludes.get(
+					tabName);
+
+				dynamicInclude.prepareDispatch(renderRequest, renderResponse);
+			}
 
 			super.doDispatch(renderRequest, renderResponse);
 		}
