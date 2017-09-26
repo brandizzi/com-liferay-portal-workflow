@@ -19,11 +19,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowDefinitionLinkRenderPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowDefinitionRenderPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceDispatchPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceProcessActionPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceRenderPreprocessor;
 import com.liferay.portal.workflow.web.internal.servlet.taglib.WorkflowDynamicInclude;
 
 import java.io.IOException;
@@ -55,30 +50,6 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 	}
 
 	public abstract List<String> getWorkflowTabNames();
-
-	public boolean isWorkflowDefinitionLinkTabVisible() {
-		List<String> tabNames = getWorkflowTabNames();
-
-		return tabNames.contains(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK);
-	}
-
-	public boolean isWorkflowDefinitionTabVisible() {
-		List<String> tabNames = getWorkflowTabNames();
-
-		return tabNames.contains(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION);
-	}
-
-	public boolean isWorkflowInstanceTabVisible() {
-		List<String> tabNames = getWorkflowTabNames();
-
-		if (tabNames.contains(WorkflowWebKeys.WORKFLOW_TAB_INSTANCE) ||
-			tabNames.contains(WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS)) {
-
-			return true;
-		}
-
-		return false;
-	}
 
 	@Override
 	public void processAction(
@@ -166,26 +137,6 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 		_dynamicIncludes.remove(tabsName);
 	}
-
-	@Reference(unbind = "-")
-	protected WorkflowDefinitionLinkRenderPreprocessor
-		workflowDefinitionLinkRenderPreprocessor;
-
-	@Reference(unbind = "-")
-	protected WorkflowDefinitionRenderPreprocessor
-		workflowDefinitionRenderPreprocessor;
-
-	@Reference(unbind = "-")
-	protected WorkflowInstanceDispatchPreprocessor
-		workflowInstanceDispatchPreprocessor;
-
-	@Reference(unbind = "-")
-	protected WorkflowInstanceProcessActionPreprocessor
-		workflowInstanceProcessActionPreprocessor;
-
-	@Reference(unbind = "-")
-	protected WorkflowInstanceRenderPreprocessor
-		workflowInstanceRenderPreprocessor;
 
 	private final Map<String, WorkflowDynamicInclude> _dynamicIncludes =
 		new ConcurrentHashMap<>();
