@@ -14,16 +14,10 @@
 
 package com.liferay.portal.workflow.web.internal.servlet.taglib;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
@@ -31,31 +25,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {"portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_INSTANCE},
-	service = DynamicInclude.class
+	service = {DynamicInclude.class, WorkflowDynamicInclude.class}
 )
-public class WorkflowInstanceDynamicInclude extends BaseJSPDynamicInclude {
+public class WorkflowInstanceDynamicInclude extends BaseWorkflowDynamicInclude {
 
 	@Override
 	protected String getJspPath() {
 		return "/instance/view.jsp";
 	}
-
-	@Override
-	protected Log getLog() {
-		return _log;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)",
-		unbind = "-"
-
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		WorkflowInstanceDynamicInclude.class);
 
 }
