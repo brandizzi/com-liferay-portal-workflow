@@ -49,8 +49,7 @@ page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowDe
 page import="com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionDisplayTerms" %><%@
 page import="com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionSearch" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>

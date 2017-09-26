@@ -89,6 +89,12 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		renderRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_TAB_DYNAMIC_INCLUDES, _dynamicIncludes);
+
+		renderRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_TAB_NAMES, getWorkflowTabNames());
+
 		setWorkflowTabsVisibilityPortletRequestAttribute(renderRequest);
 
 		if (isWorkflowDefinitionLinkTabVisible()) {
