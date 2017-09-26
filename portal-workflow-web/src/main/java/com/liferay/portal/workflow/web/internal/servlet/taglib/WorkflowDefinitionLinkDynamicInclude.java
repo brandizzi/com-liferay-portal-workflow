@@ -14,10 +14,17 @@
 
 package com.liferay.portal.workflow.web.internal.servlet.taglib;
 
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.internal.display.context.WorkflowDefinitionLinkDisplayContext;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
@@ -31,8 +38,27 @@ public class WorkflowDefinitionLinkDynamicInclude
 	extends BaseWorkflowDynamicInclude {
 
 	@Override
+	public void prepareRender(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		WorkflowDefinitionLinkDisplayContext displayContext =
+			new WorkflowDefinitionLinkDisplayContext(
+				renderRequest, renderResponse,
+				workflowDefinitionLinkLocalService);
+
+		renderRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT,
+			displayContext);
+	}
+
+	@Override
 	protected String getJspPath() {
 		return "/definition_link/view.jsp";
 	}
+
+	@Reference(unbind = "-")
+	protected WorkflowDefinitionLinkLocalService
+		workflowDefinitionLinkLocalService;
 
 }
