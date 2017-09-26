@@ -15,9 +15,14 @@
 package com.liferay.portal.workflow.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowDispatchPreprocessor;
+import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowProcessActionPreprocessor;
+import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowRenderPreprocessor;
 
 /**
  * @author Adam Brandizzi
  */
-public interface WorkflowDynamicInclude extends DynamicInclude {
+public interface WorkflowDynamicInclude
+	extends DynamicInclude, WorkflowDispatchPreprocessor,
+			WorkflowRenderPreprocessor, WorkflowProcessActionPreprocessor {
 }
