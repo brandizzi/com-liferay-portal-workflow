@@ -14,19 +14,31 @@
 
 package com.liferay.portal.workflow.web.internal.servlet.taglib;
 
-import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 
-import org.osgi.service.component.annotations.Component;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Adam Brandizzi
  */
-@Component(
-	immediate = true,
-	property = {"portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS},
-	service = {DynamicInclude.class, WorkflowDynamicInclude.class}
-)
-public class MyWorkflowInstanceDynamicInclude
-	extends WorkflowInstanceDynamicInclude {
+public abstract class BaseWorkflowDynamicInclude
+	extends BaseJSPDynamicInclude implements WorkflowDynamicInclude {
+
+	@Override
+	protected Log getLog() {
+		Class<? extends BaseWorkflowDynamicInclude> clazz = getClass();
+
+		if (!_logs.containsKey(clazz)) {
+			_logs.put(clazz, LogFactoryUtil.getLog(clazz));
+		}
+
+		return _logs.get(clazz);
+	}
+
+	private static final Map<Class<? extends BaseWorkflowDynamicInclude>, Log>
+		_logs = new HashMap<>();
+
 }
