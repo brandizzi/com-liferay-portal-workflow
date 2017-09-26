@@ -12,19 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.request.prepocessor;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
+package com.liferay.portal.workflow.web.internal.constants;
 
 /**
  * @author Adam Brandizzi
  */
-public interface WorkflowProcessActionPreprocessor {
+public class WorkflowDefinitionConstants {
 
-	public void prepareProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException;
+	public static final int STATUS_ALL = 0;
+
+	public static final int STATUS_NOT_PUBLISHED = 1;
+
+	public static final int STATUS_PUBLISHED = 2;
 
 }
