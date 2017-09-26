@@ -58,19 +58,4 @@ public class UserWorkflowPortlet extends BaseWorkflowPortlet {
 		return Arrays.asList(WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS);
 	}
 
-	@Override
-	public boolean isWorkflowDefinitionLinkTabVisible() {
-		return false;
-	}
-
-	@Override
-	public boolean isWorkflowDefinitionTabVisible() {
-		return false;
-	}
-
-	@Override
-	public boolean isWorkflowInstanceTabVisible() {
-		return true;
-	}
-
 }

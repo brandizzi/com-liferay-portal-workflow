@@ -40,13 +40,4 @@ public class WorkflowWebKeys {
 
 	public static final String WORKFLOW_TAB_NAMES = "WORKFLOW_TAB_NAMES";
 
-	public static final String WORKFLOW_VISIBILITY_DEFINITION =
-		"WORKFLOW_VISIBILITY_DEFINITION";
-
-	public static final String WORKFLOW_VISIBILITY_DEFINITION_LINK =
-		"WORKFLOW_VISIBILITY_DEFINITION_LINK";
-
-	public static final String WORKFLOW_VISIBILITY_INSTANCE =
-		"WORKFLOW_VISIBILITY_INSTANCE";
-
 }

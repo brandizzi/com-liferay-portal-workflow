@@ -58,19 +58,4 @@ public class SiteAdministrationWorkflowPortlet extends BaseWorkflowPortlet {
 		return Arrays.asList(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK);
 	}
 
-	@Override
-	public boolean isWorkflowDefinitionLinkTabVisible() {
-		return true;
-	}
-
-	@Override
-	public boolean isWorkflowDefinitionTabVisible() {
-		return false;
-	}
-
-	@Override
-	public boolean isWorkflowInstanceTabVisible() {
-		return false;
-	}
-
 }
