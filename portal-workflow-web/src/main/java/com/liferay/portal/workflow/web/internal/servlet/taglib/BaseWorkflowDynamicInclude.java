@@ -21,6 +21,12 @@ import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Reference;
@@ -30,6 +36,24 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseWorkflowDynamicInclude
 	extends BaseJSPDynamicInclude implements WorkflowDynamicInclude {
+
+	@Override
+	public void prepareDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+	}
+
+	@Override
+	public void prepareProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+	}
+
+	@Override
+	public void prepareRender(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+	}
 
 	@Override
 	protected Log getLog() {
