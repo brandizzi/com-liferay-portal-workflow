@@ -15,7 +15,8 @@
 package com.liferay.portal.workflow.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.servlet.taglib.WorkflowDynamicInclude;
 
 import org.osgi.service.component.annotations.Component;
 

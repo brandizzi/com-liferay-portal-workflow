@@ -26,9 +26,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
+import com.liferay.portal.workflow.web.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.configuration.WorkflowInstanceWebConfiguration;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowPreprocessorHelper;
+import com.liferay.portal.workflow.web.servlet.taglib.BaseWorkflowDynamicInclude;
+import com.liferay.portal.workflow.web.servlet.taglib.WorkflowDynamicInclude;
 
 import java.util.Map;
 
