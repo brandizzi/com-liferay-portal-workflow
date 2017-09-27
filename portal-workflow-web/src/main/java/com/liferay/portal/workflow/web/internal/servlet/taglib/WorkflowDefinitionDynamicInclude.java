@@ -53,6 +53,11 @@ public class WorkflowDefinitionDynamicInclude
 	extends BaseWorkflowDynamicInclude {
 
 	@Override
+	public String getSearchJspPath() {
+		return "/definition/workflow_definition_search.jsp";
+	}
+
+	@Override
 	public String getTabName() {
 		return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION;
 	}
