@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.servlet.taglib;
+package com.liferay.portal.workflow.web.servlet.taglib;
 
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
