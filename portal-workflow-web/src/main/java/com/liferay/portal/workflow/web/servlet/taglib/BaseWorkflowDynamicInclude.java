@@ -30,6 +30,8 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Adam Brandizzi
  */
@@ -51,6 +53,11 @@ public abstract class BaseWorkflowDynamicInclude
 		searchURL.setParameter("tab", getTabName());
 
 		return searchURL;
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -82,7 +89,15 @@ public abstract class BaseWorkflowDynamicInclude
 		return _logs.get(clazz);
 	}
 
+	@Override
+	protected void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+		super.setServletContext(servletContext);
+	}
+
 	private static final Map<Class<? extends BaseWorkflowDynamicInclude>, Log>
 		_logs = new HashMap<>();
+
+	private ServletContext _servletContext;
 
 }
