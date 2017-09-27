@@ -23,6 +23,8 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Adam Brandizzi
  */
@@ -32,6 +34,8 @@ public interface WorkflowDynamicInclude extends DynamicInclude {
 
 	public PortletURL getSearchURL(
 		RenderRequest renderRequest, RenderResponse renderResponse);
+
+	public ServletContext getServletContext();
 
 	public String getTabName();
 
