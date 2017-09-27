@@ -40,6 +40,8 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -112,6 +114,15 @@ public class WorkflowInstanceDynamicInclude extends BaseWorkflowDynamicInclude {
 	@Override
 	protected String getJspPath() {
 		return "/instance/view.jsp";
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	protected void setWorkflowInstanceRenderRequestAttribute(
