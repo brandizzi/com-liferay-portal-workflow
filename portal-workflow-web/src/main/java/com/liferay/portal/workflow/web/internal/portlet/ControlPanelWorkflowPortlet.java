@@ -62,14 +62,6 @@ public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 			definitionPortletTab, definitionLinkPortletTab, instancePortletTab);
 	}
 
-	@Override
-	public List<String> getWorkflowTabNames() {
-		return Arrays.asList(
-			WorkflowWebKeys.WORKFLOW_TAB_DEFINITION,
-			WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK,
-			WorkflowWebKeys.WORKFLOW_TAB_INSTANCE);
-	}
-
 	@Reference(
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK + ")"

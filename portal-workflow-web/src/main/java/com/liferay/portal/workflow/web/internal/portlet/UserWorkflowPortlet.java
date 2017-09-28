@@ -61,11 +61,6 @@ public class UserWorkflowPortlet extends BaseWorkflowPortlet {
 		return Arrays.asList(mySubmissionsPortletTab);
 	}
 
-	@Override
-	public List<String> getWorkflowTabNames() {
-		return Arrays.asList(WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS);
-	}
-
 	@Reference(
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS + ")"

@@ -61,11 +61,6 @@ public class SiteAdministrationWorkflowPortlet extends BaseWorkflowPortlet {
 		return Arrays.asList(definitionLinkPortletTab);
 	}
 
-	@Override
-	public List<String> getWorkflowTabNames() {
-		return Arrays.asList(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK);
-	}
-
 	@Reference(
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK + ")"
