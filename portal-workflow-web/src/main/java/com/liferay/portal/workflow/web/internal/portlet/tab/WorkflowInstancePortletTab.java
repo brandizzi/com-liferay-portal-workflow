@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.servlet.taglib;
+package com.liferay.portal.workflow.web.internal.portlet.tab;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.workflow.web.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.configuration.WorkflowInstanceWebConfiguration;
 import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowPreprocessorHelper;
-import com.liferay.portal.workflow.web.servlet.taglib.BaseWorkflowDynamicInclude;
-import com.liferay.portal.workflow.web.servlet.taglib.WorkflowDynamicInclude;
+import com.liferay.portal.workflow.web.portlet.tab.BaseWorkflowPortletTab;
+import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import java.util.Map;
 
@@ -53,18 +53,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {"portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_INSTANCE},
-	service = {DynamicInclude.class, WorkflowDynamicInclude.class}
+	service = {DynamicInclude.class, WorkflowPortletTab.class}
 )
-public class WorkflowInstanceDynamicInclude extends BaseWorkflowDynamicInclude {
+public class WorkflowInstancePortletTab extends BaseWorkflowPortletTab {
+
+	@Override
+	public String getName() {
+		return WorkflowWebKeys.WORKFLOW_TAB_INSTANCE;
+	}
 
 	@Override
 	public String getSearchJspPath() {
 		return "/instance/workflow_instance_search.jsp";
-	}
-
-	@Override
-	public String getTabName() {
-		return WorkflowWebKeys.WORKFLOW_TAB_INSTANCE;
 	}
 
 	@Override
@@ -162,6 +162,6 @@ public class WorkflowInstanceDynamicInclude extends BaseWorkflowDynamicInclude {
 	protected WorkflowPreprocessorHelper workflowPreprocessorHelper;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		WorkflowInstanceDynamicInclude.class);
+		WorkflowInstancePortletTab.class);
 
 }
