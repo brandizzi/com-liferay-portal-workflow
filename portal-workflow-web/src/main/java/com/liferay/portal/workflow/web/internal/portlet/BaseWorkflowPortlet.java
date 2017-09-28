@@ -74,9 +74,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		actionRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());
 
-		for (String tabName : getWorkflowTabNames()) {
-			WorkflowPortletTab portletTab = _portletTabMap.get(tabName);
-
+		for (WorkflowPortletTab portletTab : getPortletTabs()) {
 			portletTab.prepareProcessAction(actionRequest, actionResponse);
 		}
 
@@ -90,9 +88,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 		addRenderRequestAttributes(renderRequest);
 
-		for (String tabName : getWorkflowTabNames()) {
-			WorkflowPortletTab portletTab = _portletTabMap.get(tabName);
-
+		for (WorkflowPortletTab portletTab : getPortletTabs()) {
 			portletTab.prepareRender(renderRequest, renderResponse);
 		}
 
@@ -119,9 +115,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			include("/instance/error.jsp", renderRequest, renderResponse);
 		}
 		else {
-			for (String tabName : getWorkflowTabNames()) {
-				WorkflowPortletTab portletTab = _portletTabMap.get(tabName);
-
+			for (WorkflowPortletTab portletTab : getPortletTabs()) {
 				portletTab.prepareDispatch(renderRequest, renderResponse);
 			}
 
