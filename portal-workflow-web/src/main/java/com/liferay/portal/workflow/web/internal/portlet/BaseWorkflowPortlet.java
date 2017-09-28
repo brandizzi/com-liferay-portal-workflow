@@ -49,6 +49,8 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		return tabNames.get(0);
 	}
 
+	public abstract List<WorkflowPortletTab> getPortletTabs();
+
 	public abstract List<String> getWorkflowTabNames();
 
 	@Override
