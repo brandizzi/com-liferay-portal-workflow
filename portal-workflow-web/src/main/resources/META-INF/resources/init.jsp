@@ -20,8 +20,7 @@ page import="com.liferay.portal.workflow.web.internal.constants.WorkflowPortletK
 page import="com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 
-<%@ page import="java.util.List" %><%@
-page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
