@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.web.internal.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.web.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
@@ -99,6 +100,13 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 	protected void addRenderRequestAttributes(RenderRequest renderRequest) {
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());
+
+		renderRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_PORTLET_TABS, getPortletTabs());
+		renderRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_SELECTED_PORTLET_TAB,
+			getSelectedPortletTab(renderRequest));
+
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_TABS, _dynamicIncludes);
 		renderRequest.setAttribute(
@@ -122,6 +130,22 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 			super.doDispatch(renderRequest, renderResponse);
 		}
+	}
+
+	protected WorkflowPortletTab getSelectedPortletTab(
+		RenderRequest renderRequest) {
+
+		String tabName = ParamUtil.get(renderRequest, "tab", getDefaultTab());
+		List<WorkflowPortletTab> portletTabs = getPortletTabs();
+
+		Stream<WorkflowPortletTab> stream = portletTabs.stream();
+
+		return stream.filter(
+			portletTab -> portletTab.getName().equals(tabName)
+		).findFirst(
+		).orElse(
+			portletTabs.get(0)
+		);
 	}
 
 	@Reference(
