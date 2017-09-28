@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -43,14 +45,26 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 	public String getDefaultTab() {
-		List<String> tabNames = getWorkflowTabNames();
+		List<WorkflowPortletTab> portletTabs = getPortletTabs();
 
-		return tabNames.get(0);
+		WorkflowPortletTab portletTab = portletTabs.get(0);
+
+		return portletTab.getName();
 	}
 
 	public abstract List<WorkflowPortletTab> getPortletTabs();
 
-	public abstract List<String> getWorkflowTabNames();
+	public List<String> getWorkflowTabNames() {
+		List<WorkflowPortletTab> portletTabs = getPortletTabs();
+
+		Stream<WorkflowPortletTab> stream = portletTabs.stream();
+
+		return stream.map(
+			portletTab -> portletTab.getName()
+		).collect(
+			Collectors.toList()
+		);
+	}
 
 	@Override
 	public void processAction(
