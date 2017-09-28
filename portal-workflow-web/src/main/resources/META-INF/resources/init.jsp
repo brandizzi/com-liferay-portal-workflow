@@ -35,10 +35,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <portlet:defineObjects />
 
 <%
-String defaultTab = (String)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_DEFAULT_TAB);
-
-String tab = ParamUtil.get(request, "tab", defaultTab);
-
 List<WorkflowPortletTab> portletTabs = (List<WorkflowPortletTab>)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_PORTLET_TABS);
 WorkflowPortletTab selectedPortletTab = (WorkflowPortletTab)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_SELECTED_PORTLET_TAB);
 %>
