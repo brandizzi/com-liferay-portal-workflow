@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
-import com.liferay.portal.workflow.web.internal.servlet.taglib.WorkflowDynamicInclude;
+import com.liferay.portal.workflow.web.internal.portlet.tab.WorkflowPortletTab;
 
 import java.io.IOException;
 
@@ -60,8 +60,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());
 
 		for (String tabName : getWorkflowTabNames()) {
-			WorkflowDynamicInclude dynamicInclude = _dynamicIncludes.get(
-				tabName);
+			WorkflowPortletTab dynamicInclude = _dynamicIncludes.get(tabName);
 
 			dynamicInclude.prepareProcessAction(actionRequest, actionResponse);
 		}
@@ -77,8 +76,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		addRenderRequestAttributes(renderRequest);
 
 		for (String tabName : getWorkflowTabNames()) {
-			WorkflowDynamicInclude dynamicInclude = _dynamicIncludes.get(
-				tabName);
+			WorkflowPortletTab dynamicInclude = _dynamicIncludes.get(tabName);
 
 			dynamicInclude.prepareRender(renderRequest, renderResponse);
 		}
@@ -90,7 +88,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());
 		renderRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_TAB_DYNAMIC_INCLUDES, _dynamicIncludes);
+			WorkflowWebKeys.WORKFLOW_TABS, _dynamicIncludes);
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_TAB_NAMES, getWorkflowTabNames());
 	}
@@ -107,7 +105,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		}
 		else {
 			for (String tabName : getWorkflowTabNames()) {
-				WorkflowDynamicInclude dynamicInclude = _dynamicIncludes.get(
+				WorkflowPortletTab dynamicInclude = _dynamicIncludes.get(
 					tabName);
 
 				dynamicInclude.prepareDispatch(renderRequest, renderResponse);
@@ -122,25 +120,19 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	protected void setDynamicInclude(
-		WorkflowDynamicInclude dynamicInclude, Map<String, Object> properties) {
+	protected void setPortletTab(
+		WorkflowPortletTab portletTab, Map<String, Object> properties) {
 
-		String tabsName = MapUtil.getString(
-			properties, "portal.workflow.tabs.name");
-
-		_dynamicIncludes.put(tabsName, dynamicInclude);
+		_portletTabMap.put(portletTab.getName(), portletTab);
 	}
 
-	protected void unsetDynamicInclude(
-		WorkflowDynamicInclude dynamicInclude, Map<String, Object> properties) {
+	protected void unsetPortletTab(
+		WorkflowPortletTab portletTab, Map<String, Object> properties) {
 
-		String tabsName = MapUtil.getString(
-			properties, "portal.workflow.tabs.name");
-
-		_dynamicIncludes.remove(tabsName);
+		_portletTabMap.remove(portletTab.getName());
 	}
 
-	private final Map<String, WorkflowDynamicInclude> _dynamicIncludes =
+	private final Map<String, WorkflowPortletTab> _portletTabMap =
 		new ConcurrentHashMap<>();
 
 }
