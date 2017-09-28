@@ -12,15 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.request.prepocessor;
+package com.liferay.portal.workflow.web.internal.portlet.tab;
 
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.workflow.web.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.display.context.WorkflowDefinitionLinkDisplayContext;
+import com.liferay.portal.workflow.web.portlet.tab.BaseWorkflowPortletTab;
+import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,9 +33,22 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(service = WorkflowDefinitionLinkRenderPreprocessor.class)
-public class WorkflowDefinitionLinkRenderPreprocessor
-	implements WorkflowRenderPreprocessor {
+@Component(
+	immediate = true,
+	property = {"portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK},
+	service = {DynamicInclude.class, WorkflowPortletTab.class}
+)
+public class WorkflowDefinitionLinkPortletTab extends BaseWorkflowPortletTab {
+
+	@Override
+	public String getName() {
+		return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK;
+	}
+
+	@Override
+	public String getSearchJspPath() {
+		return "/definition_link/workflow_definition_link_search.jsp";
+	}
 
 	@Override
 	public void prepareRender(
@@ -40,15 +58,29 @@ public class WorkflowDefinitionLinkRenderPreprocessor
 		WorkflowDefinitionLinkDisplayContext displayContext =
 			new WorkflowDefinitionLinkDisplayContext(
 				renderRequest, renderResponse,
-				_workflowDefinitionLinkLocalService);
+				workflowDefinitionLinkLocalService);
 
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT,
 			displayContext);
 	}
 
+	@Override
+	protected String getJspPath() {
+		return "/definition_link/view.jsp";
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
 	@Reference(unbind = "-")
-	private WorkflowDefinitionLinkLocalService
-		_workflowDefinitionLinkLocalService;
+	protected WorkflowDefinitionLinkLocalService
+		workflowDefinitionLinkLocalService;
 
 }

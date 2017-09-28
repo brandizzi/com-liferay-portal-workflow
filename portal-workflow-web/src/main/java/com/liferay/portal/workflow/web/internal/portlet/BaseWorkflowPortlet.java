@@ -16,58 +16,36 @@ package com.liferay.portal.workflow.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowDefinitionLinkRenderPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowDefinitionRenderPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceDispatchPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceProcessActionPreprocessor;
-import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowInstanceRenderPreprocessor;
+import com.liferay.portal.workflow.web.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import java.io.IOException;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
  */
 public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
-	public String getDefaultTab() {
-		if (isWorkflowDefinitionTabVisible()) {
-			return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION;
-		}
-
-		if (isWorkflowDefinitionLinkTabVisible()) {
-			return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK;
-		}
-
-		return WorkflowWebKeys.WORKFLOW_TAB_INSTANCE;
-	}
-
-	public abstract boolean isWorkflowDefinitionLinkTabVisible();
-
-	public abstract boolean isWorkflowDefinitionTabVisible();
-
-	public abstract boolean isWorkflowInstanceTabVisible();
+	public abstract List<WorkflowPortletTab> getPortletTabs();
 
 	@Override
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		setWorkflowTabsVisibilityPortletRequestAttribute(actionRequest);
-
-		if (isWorkflowDefinitionTabVisible()) {
-			workflowInstanceProcessActionPreprocessor.prepareProcessAction(
-				actionRequest, actionResponse);
+		for (WorkflowPortletTab portletTab : getPortletTabs()) {
+			portletTab.prepareProcessAction(actionRequest, actionResponse);
 		}
 
 		super.processAction(actionRequest, actionResponse);
@@ -78,24 +56,21 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		setWorkflowTabsVisibilityPortletRequestAttribute(renderRequest);
+		addRenderRequestAttributes(renderRequest);
 
-		if (isWorkflowDefinitionLinkTabVisible()) {
-			workflowDefinitionLinkRenderPreprocessor.prepareRender(
-				renderRequest, renderResponse);
-		}
-
-		if (isWorkflowDefinitionTabVisible()) {
-			workflowDefinitionRenderPreprocessor.prepareRender(
-				renderRequest, renderResponse);
-		}
-
-		if (isWorkflowInstanceTabVisible()) {
-			workflowInstanceRenderPreprocessor.prepareRender(
-				renderRequest, renderResponse);
+		for (WorkflowPortletTab portletTab : getPortletTabs()) {
+			portletTab.prepareRender(renderRequest, renderResponse);
 		}
 
 		super.render(renderRequest, renderResponse);
+	}
+
+	protected void addRenderRequestAttributes(RenderRequest renderRequest) {
+		renderRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_PORTLET_TABS, getPortletTabs());
+		renderRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_SELECTED_PORTLET_TAB,
+			getSelectedPortletTab(renderRequest));
 	}
 
 	@Override
@@ -109,47 +84,37 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			include("/instance/error.jsp", renderRequest, renderResponse);
 		}
 		else {
-			workflowInstanceDispatchPreprocessor.prepareDispatch(
-				renderRequest, renderResponse);
+			for (WorkflowPortletTab portletTab : getPortletTabs()) {
+				portletTab.prepareDispatch(renderRequest, renderResponse);
+			}
 
 			super.doDispatch(renderRequest, renderResponse);
 		}
 	}
 
-	protected void setWorkflowTabsVisibilityPortletRequestAttribute(
-		PortletRequest portletRequest) {
+	protected WorkflowPortletTab getDefaultPortletTab() {
+		List<WorkflowPortletTab> portletTabs = getPortletTabs();
 
-		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_DEFAULT_TAB, getDefaultTab());
-		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_VISIBILITY_DEFINITION,
-			isWorkflowDefinitionTabVisible());
-		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_VISIBILITY_DEFINITION_LINK,
-			isWorkflowDefinitionLinkTabVisible());
-		portletRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_VISIBILITY_INSTANCE,
-			isWorkflowInstanceTabVisible());
+		return portletTabs.get(0);
 	}
 
-	@Reference(unbind = "-")
-	protected WorkflowDefinitionLinkRenderPreprocessor
-		workflowDefinitionLinkRenderPreprocessor;
+	protected WorkflowPortletTab getSelectedPortletTab(
+		RenderRequest renderRequest) {
 
-	@Reference(unbind = "-")
-	protected WorkflowDefinitionRenderPreprocessor
-		workflowDefinitionRenderPreprocessor;
+		WorkflowPortletTab defaultPortletTab = getDefaultPortletTab();
+		List<WorkflowPortletTab> portletTabs = getPortletTabs();
 
-	@Reference(unbind = "-")
-	protected WorkflowInstanceDispatchPreprocessor
-		workflowInstanceDispatchPreprocessor;
+		String tabName = ParamUtil.get(
+			renderRequest, "tab", defaultPortletTab.getName());
 
-	@Reference(unbind = "-")
-	protected WorkflowInstanceProcessActionPreprocessor
-		workflowInstanceProcessActionPreprocessor;
+		Stream<WorkflowPortletTab> stream = portletTabs.stream();
 
-	@Reference(unbind = "-")
-	protected WorkflowInstanceRenderPreprocessor
-		workflowInstanceRenderPreprocessor;
+		return stream.filter(
+			portletTab -> portletTab.getName().equals(tabName)
+		).findFirst(
+		).orElse(
+			defaultPortletTab
+		);
+	}
 
 }
