@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 
 /**
- * @author Marcellus Tavares
+ * @author Adam Brandizzi
  */
-public class WorkflowDefinitionNamePredicateFilter
+public class WorkflowDefinitionDescriptionPredicateFilter
 	implements PredicateFilter<WorkflowDefinition> {
 
-	public WorkflowDefinitionNamePredicateFilter(String keywords) {
+	public WorkflowDefinitionDescriptionPredicateFilter(String keywords) {
 		_keywords = keywords;
 	}
 
@@ -43,7 +43,7 @@ public class WorkflowDefinitionNamePredicateFilter
 		}
 
 		return StringUtil.containsIgnoreCase(
-			workflowDefinition.getName(), _keywords, delimiter);
+			workflowDefinition.getDescription(), _keywords, delimiter);
 	}
 
 	private final String _keywords;

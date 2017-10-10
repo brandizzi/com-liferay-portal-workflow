@@ -15,22 +15,24 @@
 package com.liferay.portal.workflow.web.internal.util.filter;
 
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowDefinitionConstants;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Leonardo Barros
+ * @author Adam Brandizzi
  */
-public class WorkflowDefinitionNamePredicateFilterTest {
+public class WorkflowDefinitionActivePredicateFilterTest {
 
 	@Test
-	public void testFilterWithoutSpace1() {
-		WorkflowDefinitionNamePredicateFilter filter =
-			new WorkflowDefinitionNamePredicateFilter("Single");
+	public void testFilterAllIncludeActive() {
+		WorkflowDefinitionActivePredicateFilter filter =
+			new WorkflowDefinitionActivePredicateFilter(
+				WorkflowDefinitionConstants.STATUS_ALL);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			"Single Approver", null);
+			true);
 
 		boolean result = filter.filter(workflowDefinition);
 
@@ -38,12 +40,13 @@ public class WorkflowDefinitionNamePredicateFilterTest {
 	}
 
 	@Test
-	public void testFilterWithoutSpace2() {
-		WorkflowDefinitionNamePredicateFilter filter =
-			new WorkflowDefinitionNamePredicateFilter("Appr");
+	public void testFilterAllIncludeInactive() {
+		WorkflowDefinitionActivePredicateFilter filter =
+			new WorkflowDefinitionActivePredicateFilter(
+				WorkflowDefinitionConstants.STATUS_ALL);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			"Single Approver", null);
+			false);
 
 		boolean result = filter.filter(workflowDefinition);
 
@@ -51,12 +54,13 @@ public class WorkflowDefinitionNamePredicateFilterTest {
 	}
 
 	@Test
-	public void testFilterWithoutSpace3() {
-		WorkflowDefinitionNamePredicateFilter filter =
-			new WorkflowDefinitionNamePredicateFilter("Approver");
+	public void testFilterNotPublishedExcludeActive() {
+		WorkflowDefinitionActivePredicateFilter filter =
+			new WorkflowDefinitionActivePredicateFilter(
+				WorkflowDefinitionConstants.STATUS_NOT_PUBLISHED);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			"A Different Definition", null);
+			true);
 
 		boolean result = filter.filter(workflowDefinition);
 
@@ -64,12 +68,13 @@ public class WorkflowDefinitionNamePredicateFilterTest {
 	}
 
 	@Test
-	public void testFilterWithSpace1() {
-		WorkflowDefinitionNamePredicateFilter filter =
-			new WorkflowDefinitionNamePredicateFilter("Single Approver");
+	public void testFilterNotPublishedIncludeInactive() {
+		WorkflowDefinitionActivePredicateFilter filter =
+			new WorkflowDefinitionActivePredicateFilter(
+				WorkflowDefinitionConstants.STATUS_NOT_PUBLISHED);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			"Single Approver Definition", null);
+			false);
 
 		boolean result = filter.filter(workflowDefinition);
 
@@ -77,16 +82,31 @@ public class WorkflowDefinitionNamePredicateFilterTest {
 	}
 
 	@Test
-	public void testFilterWithSpace2() {
-		WorkflowDefinitionNamePredicateFilter filter =
-			new WorkflowDefinitionNamePredicateFilter("Single Approver");
+	public void testFilterPublishedExcludeInactive() {
+		WorkflowDefinitionActivePredicateFilter filter =
+			new WorkflowDefinitionActivePredicateFilter(
+				WorkflowDefinitionConstants.STATUS_PUBLISHED);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			"A Different Definition", null);
+			false);
 
 		boolean result = filter.filter(workflowDefinition);
 
 		Assert.assertFalse(result);
+	}
+
+	@Test
+	public void testFilterPublishedIncludeActive() {
+		WorkflowDefinitionActivePredicateFilter filter =
+			new WorkflowDefinitionActivePredicateFilter(
+				WorkflowDefinitionConstants.STATUS_PUBLISHED);
+
+		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
+			true);
+
+		boolean result = filter.filter(workflowDefinition);
+
+		Assert.assertTrue(result);
 	}
 
 }
