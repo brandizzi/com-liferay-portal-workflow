@@ -365,8 +365,8 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 	protected List<WorkflowDefinitionLinkSearchEntry> filter(
 		List<WorkflowDefinitionLinkSearchEntry>
-			workflowDefinitionLinkSearchEntries, String resource,
-		String workflowDefinitionLabel, boolean andOperator) {
+			workflowDefinitionLinkSearchEntries,
+		String resource, String workflowDefinitionLabel, boolean andOperator) {
 
 		if (Validator.isNull(resource) &&
 			Validator.isNull(workflowDefinitionLabel)) {
