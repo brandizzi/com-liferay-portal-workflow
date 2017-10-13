@@ -14,16 +14,16 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
-
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys" %><%@
-page import="com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys" %>
+page import="com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys" %><%@
+page import="com.liferay.portal.workflow.web.internal.servlet.taglib.WorkflowDynamicInclude" %><%@
+page import="com.liferay.taglib.servlet.PipingServletResponse" %>
+
+<%@ page import="java.util.List" %><%@
+page import="java.util.Map" %>
+
+<%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />
 
@@ -31,7 +31,8 @@ page import="com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys"
 String defaultTab = (String)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_DEFAULT_TAB);
 
 String tab = ParamUtil.get(request, "tab", defaultTab);
-boolean workflowDefinitionTabVisible = (boolean)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_VISIBILITY_DEFINITION);
-boolean workflowDefinitionLinkTabVisible = (boolean)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_VISIBILITY_DEFINITION_LINK);
-boolean workflowInstanceTabVisible = (boolean)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_VISIBILITY_INSTANCE);
+
+Map<String, WorkflowDynamicInclude> dynamicIncludes = (Map<String, WorkflowDynamicInclude>)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_TAB_DYNAMIC_INCLUDES);
+List<String> tabNames = (List<String>)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_TAB_NAMES);
+WorkflowDynamicInclude dynamicInclude = dynamicIncludes.get(tab);
 %>

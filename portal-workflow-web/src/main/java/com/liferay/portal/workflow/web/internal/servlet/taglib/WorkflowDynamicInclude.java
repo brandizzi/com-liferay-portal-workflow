@@ -12,19 +12,43 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.request.prepocessor;
+package com.liferay.portal.workflow.web.internal.servlet.taglib;
 
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Adam Brandizzi
  */
-public interface WorkflowDispatchPreprocessor {
+public interface WorkflowDynamicInclude extends DynamicInclude {
+
+	public String getSearchJspPath();
+
+	public PortletURL getSearchURL(
+		RenderRequest renderRequest, RenderResponse renderResponse);
+
+	public ServletContext getServletContext();
+
+	public String getTabName();
 
 	public void prepareDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException;
+
+	public void prepareProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException;
+
+	public void prepareRender(
+			RenderRequest actionRequest, RenderResponse actionResponse)
 		throws PortletException;
 
 }
