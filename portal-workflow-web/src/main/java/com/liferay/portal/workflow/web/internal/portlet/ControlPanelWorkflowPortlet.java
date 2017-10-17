@@ -60,25 +60,43 @@ public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 	@Override
 	public List<WorkflowPortletTab> getPortletTabs() {
 		return Arrays.asList(
-			definitionPortletTab, definitionLinkPortletTab, instancePortletTab);
+			_definitionPortletTab, _definitionLinkPortletTab,
+			_instancePortletTab);
 	}
 
 	@Reference(
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK + ")"
+		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK + ")",
+		unbind = "-"
 	)
-	protected WorkflowPortletTab definitionLinkPortletTab;
+	public void setDefinitionLinkPortletTab(
+		WorkflowPortletTab definitionLinkPortletTab) {
+
+		_definitionLinkPortletTab = definitionLinkPortletTab;
+	}
 
 	@Reference(
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION + ")"
+		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION + ")",
+		unbind = "-"
 	)
-	protected WorkflowPortletTab definitionPortletTab;
+	public void setDefinitionPortletTab(
+		WorkflowPortletTab definitionPortletTab) {
+
+		_definitionPortletTab = definitionPortletTab;
+	}
 
 	@Reference(
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_INSTANCE + ")"
+		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_INSTANCE + ")",
+		unbind = "-"
 	)
-	protected WorkflowPortletTab instancePortletTab;
+	public void setInstancePortletTab(WorkflowPortletTab instancePortletTab) {
+		_instancePortletTab = instancePortletTab;
+	}
+
+	private WorkflowPortletTab _definitionLinkPortletTab;
+	private WorkflowPortletTab _definitionPortletTab;
+	private WorkflowPortletTab _instancePortletTab;
 
 }

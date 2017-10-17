@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {"portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS},
-	service = {DynamicInclude.class, WorkflowPortletTab.class}
+	service = WorkflowPortletTab.class
 )
 public class MyWorkflowInstancePortletTab extends WorkflowInstancePortletTab {
 

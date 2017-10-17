@@ -59,13 +59,20 @@ public class UserWorkflowPortlet extends BaseWorkflowPortlet {
 
 	@Override
 	public List<WorkflowPortletTab> getPortletTabs() {
-		return Arrays.asList(mySubmissionsPortletTab);
+		return Arrays.asList(_mySubmissionsPortletTab);
 	}
 
 	@Reference(
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS + ")"
+		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS + ")",
+		unbind = "-"
 	)
-	protected WorkflowPortletTab mySubmissionsPortletTab;
+	public void setMySubmissionsPortletTab(
+		WorkflowPortletTab mySubmissionsPortletTab) {
+
+		_mySubmissionsPortletTab = mySubmissionsPortletTab;
+	}
+
+	private WorkflowPortletTab _mySubmissionsPortletTab;
 
 }

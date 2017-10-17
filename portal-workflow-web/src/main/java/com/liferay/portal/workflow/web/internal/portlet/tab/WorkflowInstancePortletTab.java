@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {"portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_INSTANCE},
-	service = {DynamicInclude.class, WorkflowPortletTab.class}
+	service = WorkflowPortletTab.class
 )
 public class WorkflowInstancePortletTab extends BaseWorkflowPortletTab {
 
