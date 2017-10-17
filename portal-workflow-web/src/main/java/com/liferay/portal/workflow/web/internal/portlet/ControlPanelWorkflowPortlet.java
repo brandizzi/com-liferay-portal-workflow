@@ -25,6 +25,7 @@ import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -64,21 +65,24 @@ public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 	}
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK + ")"
 	)
-	protected WorkflowPortletTab definitionLinkPortletTab;
+	protected volatile WorkflowPortletTab definitionLinkPortletTab;
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION + ")"
 	)
-	protected WorkflowPortletTab definitionPortletTab;
+	protected volatile WorkflowPortletTab definitionPortletTab;
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_INSTANCE + ")"
 	)
-	protected WorkflowPortletTab instancePortletTab;
+	protected volatile WorkflowPortletTab instancePortletTab;
 
 }

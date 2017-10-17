@@ -25,6 +25,7 @@ import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -63,9 +64,10 @@ public class UserWorkflowPortlet extends BaseWorkflowPortlet {
 	}
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS + ")"
 	)
-	protected WorkflowPortletTab mySubmissionsPortletTab;
+	protected volatile WorkflowPortletTab mySubmissionsPortletTab;
 
 }
