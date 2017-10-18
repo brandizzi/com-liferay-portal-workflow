@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.servlet.taglib;
+package com.liferay.portal.workflow.web.internal.portlet.tab;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.display.context.WorkflowDefinitionDisplayContext;
 import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowPreprocessorHelper;
+import com.liferay.portal.workflow.web.portlet.tab.BaseWorkflowPortletTab;
+import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import java.util.Objects;
 
@@ -45,19 +47,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {"portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION},
-	service = {DynamicInclude.class, WorkflowDynamicInclude.class}
+	service = WorkflowPortletTab.class
 )
-public class WorkflowDefinitionDynamicInclude
-	extends BaseWorkflowDynamicInclude {
+public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
+
+	@Override
+	public String getName() {
+		return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION;
+	}
 
 	@Override
 	public String getSearchJspPath() {
 		return "/definition/workflow_definition_search.jsp";
-	}
-
-	@Override
-	public String getTabName() {
-		return WorkflowWebKeys.WORKFLOW_TAB_DEFINITION;
 	}
 
 	@Override
