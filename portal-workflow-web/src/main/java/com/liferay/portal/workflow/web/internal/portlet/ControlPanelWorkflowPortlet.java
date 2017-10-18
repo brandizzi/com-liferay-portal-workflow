@@ -14,8 +14,9 @@
 
 package com.liferay.portal.workflow.web.internal.portlet;
 
+import com.liferay.portal.workflow.web.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +24,9 @@ import java.util.List;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adam Brandizzi
@@ -55,11 +59,30 @@ import org.osgi.service.component.annotations.Component;
 public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 
 	@Override
-	public List<String> getWorkflowTabNames() {
+	public List<WorkflowPortletTab> getPortletTabs() {
 		return Arrays.asList(
-			WorkflowWebKeys.WORKFLOW_TAB_DEFINITION,
-			WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK,
-			WorkflowWebKeys.WORKFLOW_TAB_INSTANCE);
+			definitionPortletTab, definitionLinkPortletTab, instancePortletTab);
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK + ")"
+	)
+	protected volatile WorkflowPortletTab definitionLinkPortletTab;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION + ")"
+	)
+	protected volatile WorkflowPortletTab definitionPortletTab;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_INSTANCE + ")"
+	)
+	protected volatile WorkflowPortletTab instancePortletTab;
 
 }
