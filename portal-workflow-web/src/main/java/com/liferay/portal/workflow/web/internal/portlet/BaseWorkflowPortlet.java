@@ -19,13 +19,13 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.web.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.internal.util.DynamicServiceStore;
 import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -59,7 +59,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		Stream<String> stream = portletTabNames.stream();
 
 		return stream.map(
-			name -> _portletTabMap.get(name)
+			name -> _portletTabStore.get(name)
 		).collect(
 			Collectors.toList()
 		);
@@ -119,7 +119,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 	}
 
 	protected WorkflowPortletTab getPortletTab(String name) {
-		return _portletTabMap.get(name);
+		return _portletTabStore.get(name);
 	}
 
 	protected WorkflowPortletTab getSelectedPortletTab(
@@ -128,7 +128,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		String tabName = ParamUtil.get(
 			renderRequest, "tab", getDefaultPortletTabName());
 
-		return _portletTabMap.get(tabName);
+		return _portletTabStore.get(tabName);
 	}
 
 	@Reference(
@@ -139,16 +139,18 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 	protected void setPortletTab(
 		WorkflowPortletTab portletTab, Map<String, Object> properties) {
 
-		_portletTabMap.put(portletTab.getName(), portletTab);
+		_portletTabStore.put(
+			portletTab.getName(), portletTab,
+			(Integer)properties.getOrDefault("service.ranking", 0));
 	}
 
 	protected void unsetPortletTab(
 		WorkflowPortletTab portletTab, Map<String, Object> properties) {
 
-		_portletTabMap.remove(portletTab.getName());
+		_portletTabStore.remove(portletTab.getName(), portletTab);
 	}
 
-	private final Map<String, WorkflowPortletTab> _portletTabMap =
-		new ConcurrentHashMap<>();
+	private final DynamicServiceStore<WorkflowPortletTab> _portletTabStore =
+		new DynamicServiceStore<>();
 
 }
