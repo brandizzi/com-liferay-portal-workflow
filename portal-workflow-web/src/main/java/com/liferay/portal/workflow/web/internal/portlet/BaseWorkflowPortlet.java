@@ -23,7 +23,9 @@ import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import java.io.IOException;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
@@ -114,6 +116,20 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		).findFirst(
 		).orElse(
 			defaultPortletTab
+		);
+	}
+
+	protected List<WorkflowPortletTab> getValidPortletTabs(
+		WorkflowPortletTab... portletTabs) {
+
+		List<WorkflowPortletTab> list = Arrays.asList(portletTabs);
+
+		Stream<WorkflowPortletTab> stream = list.stream();
+
+		return stream.filter(
+			e -> e != null
+		).collect(
+			Collectors.toList()
 		);
 	}
 
