@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.web.internal.portlet;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -24,8 +26,6 @@ import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 import java.io.IOException;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,10 +35,9 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Adam Brandizzi
@@ -59,7 +58,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		Stream<String> stream = portletTabNames.stream();
 
 		return stream.map(
-			name -> _portletTabMap.get(name)
+			name -> _portletTabServiceTrackerMap.getService(name)
 		).collect(
 			Collectors.toList()
 		);
@@ -91,12 +90,26 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_portletTabServiceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
+			bundleContext, WorkflowPortletTab.class,
+			"portal.workflow.tabs.name");
+
+		_portletTabServiceTrackerMap.open();
+	}
+
 	protected void addRenderRequestAttributes(RenderRequest renderRequest) {
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_PORTLET_TABS, getPortletTabs());
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_SELECTED_PORTLET_TAB,
 			getSelectedPortletTab(renderRequest));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_portletTabServiceTrackerMap.close();
 	}
 
 	@Override
@@ -119,7 +132,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 	}
 
 	protected WorkflowPortletTab getPortletTab(String name) {
-		return _portletTabMap.get(name);
+		return _portletTabServiceTrackerMap.getService(name);
 	}
 
 	protected WorkflowPortletTab getSelectedPortletTab(
@@ -128,27 +141,10 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		String tabName = ParamUtil.get(
 			renderRequest, "tab", getDefaultPortletTabName());
 
-		return _portletTabMap.get(tabName);
+		return _portletTabServiceTrackerMap.getService(tabName);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setPortletTab(
-		WorkflowPortletTab portletTab, Map<String, Object> properties) {
-
-		_portletTabMap.put(portletTab.getName(), portletTab);
-	}
-
-	protected void unsetPortletTab(
-		WorkflowPortletTab portletTab, Map<String, Object> properties) {
-
-		_portletTabMap.remove(portletTab.getName());
-	}
-
-	private final Map<String, WorkflowPortletTab> _portletTabMap =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, WorkflowPortletTab>
+		_portletTabServiceTrackerMap;
 
 }
