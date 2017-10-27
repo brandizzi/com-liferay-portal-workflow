@@ -22,11 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adam Brandizzi
  */
-@Component(
-	immediate = true,
-	property = {"portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS},
-	service = WorkflowPortletTab.class
-)
+@Component(immediate = true, service = WorkflowPortletTab.class)
 public class MyWorkflowInstancePortletTab extends WorkflowInstancePortletTab {
 
 	@Override

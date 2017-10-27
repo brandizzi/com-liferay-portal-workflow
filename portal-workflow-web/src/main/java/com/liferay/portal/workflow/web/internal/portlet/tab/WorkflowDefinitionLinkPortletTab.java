@@ -32,11 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(
-	immediate = true,
-	property = {"portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK},
-	service = WorkflowPortletTab.class
-)
+@Component(immediate = true, service = WorkflowPortletTab.class)
 public class WorkflowDefinitionLinkPortletTab extends BaseWorkflowPortletTab {
 
 	@Override
