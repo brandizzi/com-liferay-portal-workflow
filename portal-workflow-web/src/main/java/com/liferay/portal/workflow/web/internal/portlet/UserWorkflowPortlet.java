@@ -18,13 +18,13 @@ import com.liferay.portal.workflow.web.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -59,10 +59,11 @@ public class UserWorkflowPortlet extends BaseWorkflowPortlet {
 
 	@Override
 	public List<WorkflowPortletTab> getPortletTabs() {
-		return Arrays.asList(mySubmissionsPortletTab);
+		return getValidPortletTabs(mySubmissionsPortletTab);
 	}
 
 	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS + ")"
 	)
