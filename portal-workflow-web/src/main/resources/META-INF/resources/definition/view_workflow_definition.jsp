@@ -27,6 +27,8 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(workflowDefinition.getName());
+
+String state = (String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE);
 %>
 
 <liferay-portlet:renderURL var="editWorkflowDefinitionURL">
@@ -36,21 +38,26 @@ renderResponse.setTitle(workflowDefinition.getName());
 	<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
 </liferay-portlet:renderURL>
 
-<div class="container-fluid-1280">
+<c:if test="<%= !WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state) %>">
+	<div class="container-fluid-1280" id="container">
+</c:if>
+
 	<aui:model-context bean="<%= workflowDefinition %>" model="<%= WorkflowDefinition.class %>" />
 
 	<liferay-frontend:info-bar>
 		<div class="container-fluid-1280">
-			<div class="info-bar-item">
-				<c:choose>
-					<c:when test="<%= workflowDefinition.isActive() %>">
-						<span class="label label-info"><%= LanguageUtil.get(request, "published") %></span>
-					</c:when>
-					<c:otherwise>
-						<span class="label label-secondary"><%= LanguageUtil.get(request, "not-published") %></span>
-					</c:otherwise>
-				</c:choose>
-			</div>
+			<c:if test="<%= !WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state) %>">
+				<div class="info-bar-item">
+					<c:choose>
+						<c:when test="<%= workflowDefinition.isActive() %>">
+							<span class="label label-info"><%= LanguageUtil.get(request, "published") %></span>
+						</c:when>
+						<c:otherwise>
+							<span class="label label-secondary"><%= LanguageUtil.get(request, "not-published") %></span>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</c:if>
 
 			<%
 			String userName = workflowDefinitionDisplayContext.getUserName(workflowDefinition);
@@ -62,7 +69,11 @@ renderResponse.setTitle(workflowDefinition.getName());
 						<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
 					</c:when>
 					<c:otherwise>
+						<% if(WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state)) { %>
+						<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), userName} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
+						<% } else { %>
 						<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
+						<% } %>
 					</c:otherwise>
 				</c:choose>
 			</span>
@@ -87,28 +98,36 @@ renderResponse.setTitle(workflowDefinition.getName());
 		</div>
 	</div>
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" href="<%= editWorkflowDefinitionURL %>" primary="<%= true %>" value='<%= LanguageUtil.get(request, "edit") %>' />
-	</aui:button-row>
-</div>
+	<c:if test="<%= !WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state) %>">
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" href="<%= editWorkflowDefinitionURL %>" primary="<%= true %>" value='<%= LanguageUtil.get(request, "edit") %>' />
+		</aui:button-row>
+	</c:if>
+
+<c:if test="<%= !WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state) %>">
+	</div>
+</c:if>
 
 <aui:script use="aui-ace-editor,liferay-xml-formatter">
 	var STR_VALUE = 'value';
 
-	var contentEditor = new A.AceEditor(
-		{
-			boundingBox: '#<portlet:namespace />contentEditor',
-			height: 600,
-			mode: 'xml',
-			readOnly: 'true',
-			tabSize: 4,
-			width: '100%'
-		}
-	).render();
+		var contentEditor = new A.AceEditor(
+			{
+				boundingBox: '#<portlet:namespace />contentEditor',
+				height: 600,
+			<c:if test="<%= !WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state) %>">
+				mode: 'xml',
+			</c:if>
+				readOnly: 'true',
+				tabSize: 4,
+				width: '100%'
+			}
+		).render();
 
 	var editorContentElement = A.one('#<portlet:namespace />content');
 
 	if (editorContentElement) {
 		contentEditor.set(STR_VALUE, editorContentElement.val());
 	}
+
 </aui:script>
