@@ -9,7 +9,7 @@ AUI.add(
 				form.setAttribute('action', actionUrl);
 				form.setAttribute('method', 'POST');
 
-				var dialog	=	Liferay.Util.Window.getWindow(
+				var dialog = Liferay.Util.Window.getWindow(
 					{
 						dialog: {
 							destroyOnHide: true,
