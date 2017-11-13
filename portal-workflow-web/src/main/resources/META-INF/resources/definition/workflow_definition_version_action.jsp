@@ -44,12 +44,12 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" id='<%= "iconMenu_" + String.valueOf(workflowDefinition.getVersion()) %>' markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 		<liferay-ui:icon
 			id='<%= "previewBeforeRevert" + String.valueOf(workflowDefinition.getVersion()) %>'
-			message='<%= LanguageUtil.get(request, "preview") %>'
+			message="preview"
 			url="javascript:;"
 		/>
 
 		<liferay-ui:icon
-			message='<%= LanguageUtil.get(request, "restore") %>'
+			message="restore"
 			url="<%= revertURL %>"
 		/>
 	</liferay-ui:icon-menu>
