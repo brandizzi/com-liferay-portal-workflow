@@ -21,11 +21,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 
-String userName = workflowDefinitionDisplayContext.getUserName(workflowDefinition);
-
-if (userName == null) {
-	userName = "";
-}
+String userName = workflowDefinitionDisplayContext.getUserNameOrBlank(workflowDefinition);
 %>
 
 <div class="flex-col flex-col-expand">
