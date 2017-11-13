@@ -138,14 +138,14 @@ public class WorkflowDefinitionDisplayContext {
 
 		return user.getFullName();
 	}
-	
+
 	public String getUserNameOrBlank(WorkflowDefinition workflowDefinition) {
 		String userName = getUserName(workflowDefinition);
-		
-		if(userName == null) {
+
+		if (userName == null) {
 			userName = StringPool.BLANK;
 		}
-		
+
 		return userName;
 	}
 
