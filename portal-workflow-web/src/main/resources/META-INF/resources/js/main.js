@@ -3,6 +3,7 @@ AUI.add(
 	function(A) {
 		var WorkflowWeb = {
 			previewBeforeRevert: function(event, renderUrl, actionUrl, title) {
+				var instance = this;
 
 				var form = A.Node.create('<form />');
 
