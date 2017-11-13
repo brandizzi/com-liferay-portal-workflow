@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
@@ -136,6 +137,16 @@ public class WorkflowDefinitionDisplayContext {
 		}
 
 		return user.getFullName();
+	}
+	
+	public String getUserNameOrBlank(WorkflowDefinition workflowDefinition) {
+		String userName = getUserName(workflowDefinition);
+		
+		if(userName == null) {
+			userName = StringPool.BLANK;
+		}
+		
+		return userName;
 	}
 
 	public List<WorkflowDefinition> getWorkflowDefinitions(String name)
