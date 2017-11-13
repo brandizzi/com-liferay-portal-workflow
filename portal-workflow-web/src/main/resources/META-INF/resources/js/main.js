@@ -90,6 +90,7 @@ AUI.add(
 
 				instance._alert = alert;
 			},
+
 			_alert: null
 		};
 

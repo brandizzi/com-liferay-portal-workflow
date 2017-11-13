@@ -43,7 +43,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 <c:if test="<%= currentWorkflowDefinition.getVersion() != workflowDefinition.getVersion() %>">
 	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" id='<%= "iconMenu_" + String.valueOf(workflowDefinition.getVersion()) %>' markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 		<liferay-ui:icon
-			id='<%= "previewBeforeRevert_" + String.valueOf(workflowDefinition.getVersion()) %>'
+			id='<%= "previewBeforeRevert" + String.valueOf(workflowDefinition.getVersion()) %>'
 			message='<%= LanguageUtil.get(request, "preview") %>'
 			url="javascript:;"
 		/>
@@ -61,5 +61,5 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 
 	var previewBeforeRevert = A.rbind('previewBeforeRevert', Liferay.WorkflowWeb, "<%= viewURL %>", "<%= revertURL %>" , title);
 
-	Liferay.delegateClick('<portlet:namespace />previewBeforeRevert_<%= String.valueOf(workflowDefinition.getVersion()) %>', previewBeforeRevert);
+	Liferay.delegateClick('<portlet:namespace />previewBeforeRevert<%= String.valueOf(workflowDefinition.getVersion()) %>', previewBeforeRevert);
 </aui:script>

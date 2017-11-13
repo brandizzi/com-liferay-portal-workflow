@@ -111,18 +111,18 @@ String state = (String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE);
 <aui:script use="aui-ace-editor,liferay-xml-formatter">
 	var STR_VALUE = 'value';
 
-		var contentEditor = new A.AceEditor(
-			{
-				boundingBox: '#<portlet:namespace />contentEditor',
-				height: 600,
-			<c:if test="<%= !WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state) %>">
-				mode: 'xml',
-			</c:if>
-				readOnly: 'true',
-				tabSize: 4,
-				width: '100%'
-			}
-		).render();
+	var contentEditor = new A.AceEditor(
+		{
+			boundingBox: '#<portlet:namespace />contentEditor',
+			height: 600,
+		<c:if test="<%= !WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state) %>">
+			mode: 'xml',
+		</c:if>
+			readOnly: 'true',
+			tabSize: 4,
+			width: '100%'
+		}
+	).render();
 
 	var editorContentElement = A.one('#<portlet:namespace />content');
 
