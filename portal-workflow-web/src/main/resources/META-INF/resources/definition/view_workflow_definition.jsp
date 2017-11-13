@@ -68,12 +68,11 @@ String state = (String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE);
 					<c:when test="<%= userName == null %>">
 						<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
 					</c:when>
-					<c:otherwise>
-						<% if(WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state)) { %>
+					<c:when test="<%= WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state) %>">
 						<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), userName} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
-						<% } else { %>
+					</c:when>
+					<c:otherwise>
 						<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
-						<% } %>
 					</c:otherwise>
 				</c:choose>
 			</span>
@@ -129,5 +128,4 @@ String state = (String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE);
 	if (editorContentElement) {
 		contentEditor.set(STR_VALUE, editorContentElement.val());
 	}
-
 </aui:script>
