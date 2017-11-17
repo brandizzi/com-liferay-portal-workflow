@@ -114,9 +114,11 @@ String state = (String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE);
 		{
 			boundingBox: '#<portlet:namespace />contentEditor',
 			height: 600,
-		<c:if test="<%= !WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state) %>">
-			mode: 'xml',
-		</c:if>
+
+			<c:if test="<%= !WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state) %>">
+				mode: 'xml',
+			</c:if>
+
 			readOnly: 'true',
 			tabSize: 4,
 			width: '100%'
