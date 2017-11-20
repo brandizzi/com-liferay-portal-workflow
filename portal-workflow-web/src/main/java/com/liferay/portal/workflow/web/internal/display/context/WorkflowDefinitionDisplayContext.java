@@ -39,6 +39,7 @@ import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionAc
 import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionDescriptionPredicateFilter;
 import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionTitlePredicateFilter;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -155,6 +156,22 @@ public class WorkflowDefinitionDisplayContext {
 		return WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
 			_workflowDefinitionRequestHelper.getCompanyId(), name,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	public List<WorkflowDefinition> getWorkflowDefinitionsOrderByDesc(
+			String name)
+		throws PortalException {
+
+		List<WorkflowDefinition> workFlowDefinitions = getWorkflowDefinitions(
+			name);
+
+		if (workFlowDefinitions.size() <= 1) {
+			return workFlowDefinitions;
+		}
+
+		Collections.reverse(workFlowDefinitions);
+
+		return workFlowDefinitions;
 	}
 
 	protected PredicateFilter<WorkflowDefinition> createPredicateFilter(
