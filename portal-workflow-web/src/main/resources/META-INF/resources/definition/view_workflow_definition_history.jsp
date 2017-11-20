@@ -24,7 +24,7 @@ WorkflowDefinition currentWorkflowDefinition = (WorkflowDefinition)request.getAt
 	id="workflowDefinitions"
 >
 	<liferay-ui:search-container-results
-		results="<%= workflowDefinitionDisplayContext.getWorkflowDefinitions(currentWorkflowDefinition.getName()) %>"
+		results="<%= workflowDefinitionDisplayContext.getWorkflowDefinitionsOrderByDesc(currentWorkflowDefinition.getName()) %>"
 	/>
 
 	<liferay-ui:search-container-row
