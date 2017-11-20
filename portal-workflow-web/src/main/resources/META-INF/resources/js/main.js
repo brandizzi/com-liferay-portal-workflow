@@ -18,7 +18,7 @@ AUI.add(
 							toolbars: {
 								footer: [
 									{
-										cssClass: 'btn btn-link',
+										cssClass: 'btn btn-secondary',
 										discardDefaultButtonCssClasses: true,
 										label: Liferay.Language.get('cancel'),
 										on: {
@@ -28,7 +28,7 @@ AUI.add(
 										}
 									},
 									{
-										cssClass: 'btn btn-lg btn-primary',
+										cssClass: 'btn btn-primary',
 										discardDefaultButtonCssClasses: true,
 										label: Liferay.Language.get('restore'),
 										on: {
