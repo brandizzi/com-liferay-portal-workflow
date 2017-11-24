@@ -34,7 +34,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 	<portlet:param name="<%= WorkflowWebKeys.WORKFLOW_JSP_STATE %>" value="previewBeforeRevert" />
 </portlet:renderURL>
 
-<liferay-portlet:actionURL name="revertWorkflowDefinition" var="revertURL">
+<liferay-portlet:actionURL name="revertWorkflowDefinition" var="revertWorkflowDefinitionURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
 	<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
@@ -50,7 +50,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 
 		<liferay-ui:icon
 			message="restore"
-			url="<%= revertURL %>"
+			url="<%= revertWorkflowDefinitionURL %>"
 		/>
 	</liferay-ui:icon-menu>
 </c:if>
@@ -58,7 +58,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 <aui:script use="liferay-workflow-web">
 	var title = '<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), workflowDefinitionDisplayContext.getUserName(workflowDefinition)} %>" key="preview" translateArguments="<%= false %>"/>';
 
-	var previewBeforeRevert = A.rbind('previewBeforeRevert', Liferay.WorkflowWeb, '<%= viewURL %>', '<%= revertURL %>' , title);
+	var previewBeforeRevert = A.rbind('previewBeforeRevert', Liferay.WorkflowWeb, '<%= viewURL %>', '<%= revertWorkflowDefinitionURL %>' , title);
 
 	Liferay.delegateClick('<portlet:namespace />previewBeforeRevert<%= String.valueOf(workflowDefinition.getVersion()) %>', previewBeforeRevert);
 </aui:script>

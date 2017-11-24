@@ -59,6 +59,7 @@ AUI.add(
 					}
 				);
 			},
+
 			showSuccessMessage: function() {
 				var instance = this;
 
