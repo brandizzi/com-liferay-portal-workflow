@@ -105,6 +105,7 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 			<aui:button-row>
 				<liferay-portlet:renderURL var="revertWorkflowDefinitionRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcPath" value="/definition/revert_workflow_definition_redirect.jsp" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
 				</liferay-portlet:renderURL>
 
 				<liferay-portlet:actionURL name="revertWorkflowDefinition" var="revertWorkflowDefinitionURL">

@@ -2,7 +2,7 @@ AUI.add(
 	'liferay-workflow-web',
 	function(A) {
 		var WorkflowWeb = {
-			previewBeforeRevert: function(event, renderUrl, actionUrl, title) {
+			previewBeforeRevert: function(event, renderUrl, actionUrl, namespace, title) {
 				var instance = this;
 
 				var form = A.Node.create('<form />');
@@ -19,6 +19,7 @@ AUI.add(
 						dialogIframe: {
 							bodyCssClass: 'dialog-with-footer'
 						},
+						id: namespace + 'previewBeforeRevert',
 						title: title,
 						uri: renderUrl
 					}
