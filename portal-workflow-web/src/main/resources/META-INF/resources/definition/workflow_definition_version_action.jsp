@@ -28,7 +28,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 
 <portlet:renderURL var="viewURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/definition/view_workflow_definition.jsp" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
 	<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
 	<portlet:param name="<%= WorkflowWebKeys.WORKFLOW_JSP_STATE %>" value="previewBeforeRevert" />

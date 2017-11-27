@@ -10,49 +10,14 @@ AUI.add(
 				form.setAttribute('action', actionUrl);
 				form.setAttribute('method', 'POST');
 
-				var dialog = Liferay.Util.Window.getWindow(
+				Liferay.Util.Window.getWindow(
 					{
 						dialog: {
 							destroyOnHide: true,
-							modal: true,
-							toolbars: {
-								footer: [
-									{
-										cssClass: 'btn btn-secondary',
-										discardDefaultButtonCssClasses: true,
-										label: Liferay.Language.get('cancel'),
-										on: {
-											click: function() {
-												dialog.destroy();
-											}
-										}
-									},
-									{
-										cssClass: 'btn btn-primary',
-										discardDefaultButtonCssClasses: true,
-										label: Liferay.Language.get('restore'),
-										on: {
-											click: function() {
-												submitForm(form);
-											}
-										}
-									}
-								],
-								header: [
-									{
-										cssClass: 'close',
-										discardDefaultButtonCssClasses: true,
-										labelHTML: '<svg class="lexicon-icon" focusable="false"><use data-href="' + Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg#times" /><title>' + Liferay.Language.get('close') + '</title></svg>',
-										on: {
-											click: function(event) {
-												dialog.destroy();
-
-												event.domEvent.stopPropagation();
-											}
-										}
-									}
-								]
-							}
+							modal: true
+						},
+						dialogIframe: {
+							bodyCssClass: 'dialog-with-footer'
 						},
 						title: title,
 						uri: renderUrl
