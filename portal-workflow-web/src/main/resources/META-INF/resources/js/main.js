@@ -2,13 +2,8 @@ AUI.add(
 	'liferay-workflow-web',
 	function(A) {
 		var WorkflowWeb = {
-			previewBeforeRevert: function(event, renderUrl, actionUrl, namespace, title) {
+			previewBeforeRevert: function(event, renderUrl, namespace, title) {
 				var instance = this;
-
-				var form = A.Node.create('<form />');
-
-				form.setAttribute('action', actionUrl);
-				form.setAttribute('method', 'POST');
 
 				Liferay.Util.Window.getWindow(
 					{
