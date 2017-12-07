@@ -14,9 +14,13 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
@@ -24,8 +28,11 @@ import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -58,9 +65,52 @@ public class RevertWorkflowDefinitionMVCActionCommand
 
 		String content = workflowDefinition.getContent();
 
-		workflowDefinitionManager.deployWorkflowDefinition(
+		workflowDefinition = workflowDefinitionManager.deployWorkflowDefinition(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 			workflowDefinition.getTitle(), content.getBytes());
+
+		setRedirectAttribute(actionRequest, actionResponse, workflowDefinition);
 	}
+
+	protected void setRedirectAttribute(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			WorkflowDefinition workflowDefinition)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String redirect = StringPool.BLANK;
+
+		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, themeDisplay.getPpid(), PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcPath", "/definition/edit_workflow_definition.jsp");
+		portletURL.setParameter("name", workflowDefinition.getName(), false);
+		portletURL.setParameter(
+			"version", String.valueOf(workflowDefinition.getVersion()), false);
+		portletURL.setWindowState(WindowState.NORMAL);
+
+		redirect = actionRequest.getParameter("redirect");
+
+		String mvcPath = actionResponse.getNamespace() + "mvcPath";
+
+		mvcPath = _http.getParameter(redirect, mvcPath, false);
+
+		if ((mvcPath != null) && mvcPath.contains("redirect.jsp")) {
+			redirect = _http.setParameter(
+				redirect, actionResponse.getNamespace() + "redirect",
+				portletURL.toString());
+		}
+		else {
+			redirect = portletURL.toString();
+		}
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+	}
+
+	@Reference
+	private Http _http;
 
 }
