@@ -7,4 +7,9 @@
 		<implicit-parameter name="p_p_mode">view</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
+	<route>
+		<pattern>/definition/{name}/{version:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/definition/edit_workflow_definition.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_mode">view</implicit-parameter>
+	</route>
 </routes>
