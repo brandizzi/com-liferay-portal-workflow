@@ -20,8 +20,6 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
-
-redirect = HtmlUtil.escapeJS(redirect);
 %>
 
 <aui:script use="aui-base">
@@ -30,7 +28,7 @@ redirect = HtmlUtil.escapeJS(redirect);
 		{
 			id: '<portlet:namespace />previewBeforeRevert',
 			portletAjaxable: <%= portlet.isAjaxable() %>,
-			redirect: '<%= HtmlUtil.escape(redirect) %>',
+			redirect: '<%= HtmlUtil.escapeJS(redirect) %>',
 			refresh: '<%= portletDisplay.getId() %>'
 		}
 	);
